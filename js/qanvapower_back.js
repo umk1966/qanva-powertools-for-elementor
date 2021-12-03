@@ -1,0 +1,209 @@
+
+		function ptwidthchange(newval,notextval){
+			if(document.getElementById('qanva_pt_width_style') != null){
+				var delit = document.getElementById('qanva_pt_width_style');
+				delit.remove();
+			}
+			var notextadd = '';
+			if(notextval == 'yes'){
+				notextadd = '.elementor-panel .elementor-element .title{font-size:0 !important;height:16px !important}';
+				localStorage.setItem("qanva_powertools_text",'yes');
+				maketooltipp(1);
+			}
+			if(notextval == 'no'){
+				notextadd = '';
+				localStorage.setItem("qanva_powertools_text",'no');
+				maketooltipp(0);
+			}
+			
+
+						var newEl = document.createElement("style"); 
+						newEl.setAttribute("id", "qanva_pt_width_style");
+										switch(newval){
+											case "2" : var textnode = document.createTextNode(".elementor-panel .elementor-responsive-panel{grid-template-columns: repeat(auto-fill, minmax(Min(135px, calc( 50% - 5px)), 1fr))}" + notextadd);
+														break;
+											case "3" : var textnode = document.createTextNode(".elementor-panel .elementor-responsive-panel{grid-template-columns: repeat(auto-fill, minmax(Min(135px, calc( 30% - 5px)), 1fr)) !important}" + notextadd);
+														break;
+											case "4" : var textnode = document.createTextNode(".elementor-panel .elementor-responsive-panel{grid-template-columns: repeat(auto-fill, minmax(Min(135px, calc( 20% - 5px)), 1fr)) !important}" + notextadd);
+														break;
+										}
+										newEl.append(textnode);
+														if(document.querySelector('#elementor-panel-inner') != null ){  
+															document.getElementById("elementor-panel-inner").appendChild(newEl);
+														}
+																localStorage.setItem("qanva_powertools_grid",newval);
+		};
+		
+		function maketooltipp(ny){
+			if("1" == ny && localStorage.getItem("qanva_powertools_tt") == "yes"){
+				if(document.querySelector('#pttt') == null){
+					var newdEl = document.createElement("div"); 
+					newdEl.setAttribute("id", "pttt");
+					newdEl.setAttribute("style", "display:none;padding:5px 7px;background:white;color:red;position:absolute;border:2px solid black;border-radius:3px;");
+						if(document.querySelector('#elementor-panel-inner') != null ){  
+							document.getElementById("elementor-panel-inner").appendChild(newdEl);
+						}
+				}
+				var el = document.getElementsByClassName("elementor-element-wrapper");
+				for(var i = 0; i < el.length; i++){
+					el[i].addEventListener("mouseover", function(){var qtt = document.getElementById('pttt');qtt.style.display = 'block'; qtt.textContent = this.querySelector('.title').textContent;}, false);
+					el[i].addEventListener("mouseout", function(){var qtt = document.getElementById('pttt');qtt.style.display = 'none'; qtt.textContent = '';}, false);
+					}
+			}
+		}
+
+		document.onmousemove = updateTT;
+			
+		function updateTT(e) {
+			var tt = document.getElementById('pttt');
+			if (tt != null && tt.style.display == 'block') {
+				x = (e.pageX ? e.pageX : window.event.x) + tt.offsetParent.scrollLeft - tt.offsetParent.offsetLeft;
+				y = (e.pageY ? e.pageY : window.event.y) + tt.offsetParent.scrollTop - tt.offsetParent.offsetTop;
+				tt.style.left = (x - 50) + "px";
+				tt.style.top 	= (y - 50) + "px";
+			}
+		}
+		
+	
+		setInterval(function(){
+				/* check and set select-box and CSS */
+				var selme = 2;
+				if('' != localStorage.getItem("qanva_powertools_grid")){
+					selme = localStorage.getItem("qanva_powertools_grid");
+				}
+				if(document.querySelector('#qanva_pt_width')){
+						document.getElementById('qanva_pt_width').value = selme;
+				}
+				/* check no-text setting */
+				var notext = 'no';
+				if('' != localStorage.getItem("qanva_powertools_text")){
+					notext = localStorage.getItem("qanva_powertools_text");
+				}
+				if('yes' == localStorage.getItem("qanva_powertools_text")){
+					maketooltipp(1);
+				}
+				/* check tooltipp setting */
+				if(document.querySelector('[data-setting="qanva_pt_tt"]')){
+					document.querySelector('[data-setting="qanva_pt_use_tt"]').checked = true;
+				}
+				if(document.querySelector('[data-setting="qanva_pt_use"]') && notext == 'yes'){
+						document.querySelector('[data-setting="qanva_pt_use"]').checked = true;
+				}
+					if(document.querySelector('[data-setting="qanva_pt_rem_wp"]') !== null){
+						if(localStorage.getItem("qanva_powertools_nowp") == "no"){
+							document.querySelector('[data-setting="qanva_pt_rem_wp"]').checked = true;
+						}
+						else{
+							document.querySelector('[data-setting="qanva_pt_rem_wp"]').checked = false;
+						}
+					}
+				/* send info */
+				if(document.querySelector('#qanva_pt_width_style') == null){
+						ptwidthchange(selme,notext);
+				}
+		},1000);
+
+		setInterval(function(){
+				if(document.querySelector('[data-setting="qanva_pt_use"]')){
+					/* check width change */
+					if(document.querySelector('[data-setting="qanva_pt_use"]').checked === true){
+						notext = 'yes';
+						ptwidthchange(localStorage.getItem("qanva_powertools_grid"),notext);
+					}
+					/* check no-text on/off */
+					if(document.querySelector('[data-setting="qanva_pt_use"]').checked === false){
+						localStorage.setItem("qanva_powertools_text",'no');
+						notext = 'no';
+						ptwidthchange(localStorage.getItem("qanva_powertools_grid"),notext);
+					}
+				}
+					/* check WP widget on/off */
+					if(document.querySelector('[data-setting="qanva_pt_rem_wp"]') !== null){
+									if(document.querySelector('[data-setting="qanva_pt_rem_wp"]').checked === true){
+										localStorage.setItem("qanva_powertools_nowp",'no');
+									}
+									if(document.querySelector('[data-setting="qanva_pt_rem_wp"]').checked === false){
+										localStorage.removeItem("qanva_powertools_nowp");
+									}
+					}
+					if(localStorage.getItem("qanva_powertools_nowp") == "no" && document.querySelector('#elementor-panel-category-wordpress') !== null){
+							document.querySelector('#elementor-panel-category-wordpress').remove();
+					}
+		}, 500);
+
+jQuery( document ).ready( function( $ ) {		
+$(document).on('change','#qanvaeebselect',function(){
+	var gotourl = $(this).val();
+	window.location = 'post.php?post=' + gotourl + '&action=elementor';
+});
+
+$(document).on('click','#elclone',function(){
+	$('#qanvaeeboverlay').show();
+});
+
+	function addbuttonstoelementormenu(){
+
+		$( '.elementor-panel .elementor-panel-menu-item-exit-to-dashboard a[href]' ).eq( 0 ).prop( 'href', './');
+			var qanva_select = '<div class="elementor-panel-menu-group-title qebheader">QUICKCHANGER</div>';
+			qanva_select += '<div class="elementor-panel-menu-item elementor-panel-menu-item qanvaselect" style="display:none;cursor:auto;background:none;" >';
+			qanva_select += '<select name="qanvaeebselect" id="qanvaeebselect"><option>' + seltext + '</option>';
+			qanva_select += linkliste ;
+			qanva_select += '</select>';
+			qanva_select += '</div>';
+			if('on' == cloning){
+				qanva_select += '<input type="button" id="elclone" value="' + qanva_extrabutton_clone + '">';
+			}
+			if( $( '.elementor-panel .qanvaselect' ).length < 1 && 'on' == jumper){
+				$( qanva_select ).insertAfter( '.elementor-panel .elementor-panel-menu-item-exit-to-dashboard' );
+			}
+		
+		for( var i = 0; i < qanva_extrabutton_url.length; i++ ){
+			var qanva_url = qanva_extrabutton_url[ i ];
+			var qanva_target = qanva_extrabutton_target[ i ];
+			var qanva_text = qanva_extrabutton_text[ i ]; 
+			var qanva_class = qanva_text.replace(/#|-|_|\s/g, '' ).toLowerCase();
+			var qanva_class_l =  $( '.elementor-panel .qanvabutton-' + qanva_class ).length;
+			var eicon = 'eicon-editor-link';
+			var linktitel = qanva_extrabutton_self;
+			if( qanva_target == '_blank' ){ eicon = 'eicon-editor-external-link'; linktitel = qanva_extrabutton_new; }
+			var qanva_html = '<div class="elementor-panel-menu-item elementor-panel-menu-item-exit-to-dashboard qanvabutton-' + qanva_class + '" style="display:none" title="' + linktitel + '"><div class="elementor-panel-menu-item-icon"><i class="' + eicon + '"></i></div><a href="' + qanva_url + '" target="' + qanva_target + '"><div class="elementor-panel-menu-item-title">' + qanva_text + '</div></a></div>';
+			if( qanva_class_l < 1 ){
+				$( qanva_html ).insertAfter( '.elementor-panel .elementor-panel-menu-item-exit-to-dashboard' );
+			}
+			$( '.qanvabutton-' + qanva_class ).eq( 1 ).remove();
+			$( '.qanvabutton-' + qanva_class ).eq( 0 ).fadeIn();
+		}
+			$( '.qanvaselect' ).fadeIn();
+	}
+	var addbuttonstoelementormenucheck = setInterval( addbuttonstoelementormenu, 200 );
+	
+	setInterval(function(){
+		if(1 == $('#qanvanewpname').length){
+			var proofdash = $('#qanvanewpname').val();
+			if('-' == proofdash.substring(0,1)){
+				proofdash = proofdash.substring(1,proofdash.length);
+			}
+			proofdash = proofdash.toLowerCase().replace(/[^a-zA-Z0-9-]+/g, "");
+			$('#qanvanewpname').val(proofdash);
+		}
+	},100);
+	
+				$(document).on('click','#qanvasaveperma',function(){
+					var parts = window.location.href.split('?');
+					var checkfordash = $('#qanvanewpname').val(); 
+						if('-' == checkfordash.substring(checkfordash.length - 1)){
+							var insertstring = checkfordash.substring(0,checkfordash.length - 1);
+							$('#qanvanewpname').val(insertstring);
+						}
+						var data = {
+							'action': 'setnewpermaname',
+							'newname': insertstring,
+							'postid': parts[1].replace( /\D/g, '')
+						};
+
+						jQuery.post(ajaxurl, data, function(response) {
+							// alert(response);
+						});
+				});
+
+});

@@ -1,0 +1,51 @@
+.qebheader{margin:25px 0 15px 0}
+.qanvaselect input{margin:10px 0 0 0;background:#0085ba;color: white;font-weight: bold;border-radius: 0;letter-spacing: 1px;cursor:pointer}
+#qanvaeeboverlay{
+	width:100%;
+	height:100%;
+	background:rgba(0,0,0,.7);
+	position:absolute;
+	z-index:9999999;
+	display:none;
+}
+.qanvaeebinfo{
+	width: 300px;
+	background: white;
+	padding: 20px;
+	border-radius: 10px;
+	margin: calc(21% - 100px) auto 0 auto;
+}
+.qanvaeebinfo input[type="text"],.qanvaeebinfo input[type="button"]{
+	margin:5px 0;
+	border-radius:0;
+}
+.qanvaeebinfo input[name="openmyclone"], #elclone{
+	margin:5px 0;
+background: #0085ba;
+color: white;
+font-weight: bold;
+border-radius: 0;
+letter-spacing: 1px;
+cursor: pointer;
+}
+.qanvaeebinfo input[type="button"]{
+cursor:pointer
+}
+#qanvaeebwrapper{
+	display:flex;
+	flex-direction:row;
+}
+#qanvanewpname{
+	width:70%;
+	margin-right:5px
+}
+#qanvasaveperma{
+background: #0085ba;
+color: white;
+font-weight: bold;
+border-radius: 0;
+letter-spacing: 1px;
+cursor: pointer;
+padding:5px;
+border:0
+}

@@ -1,0 +1,473 @@
+<?php
+/**
+ * Plugin Name: Qanva Powertools for Elementor
+ * Description: Add special settings, cloning of pages,posts/templates in Elementor
+ * Plugin URI:  https://qanva.tech/qanva-powertools-for-elementor
+ * Version:     1.0.0
+ * Author:      ukischkel, fab22
+ * Author URI:  https://qanva.tech
+ * Text Domain: qanva-powertools-for-elementor
+ * Domain Path: languages
+ */
+namespace MAKEPOWERSETTINGS;
+  
+if ( !defined( 'ABSPATH' ) ) {
+    exit;
+}
+	
+	define( 'MAKEPOWERSETTINGSVERSION', '1.0.0' );
+	    
+	if ( !get_option( 'qanva_buttons_for_elementor_select' ) ) {
+					add_option( 'qanva_buttons_for_elementor_select', '0' );
+	}
+	if ( !get_option( 'qanva_buttons_for_elementor' ) ) {
+					add_option( 'qanva_buttons_for_elementor', '' );
+	}
+	if ( !get_option( 'qanva_buttons_for_elementor_clone' ) ) {
+					add_option( 'qanva_buttons_for_elementor_clone', [0,0] );
+	}
+
+    $name = __( 'Qanva Powertools for Elementor', 'qanva-powertools-for-elementor' );
+    $desc = __( 'Add special settings, cloning of pages,posts/templates in Elementor', 'qanva-powertools-for-elementor' );
+				
+
+final class MAKEPOWERSETTINGSELEMENTOR{
+	const  MINIMUM_ELEMENTOR_VERSION = '2.0.0' ;
+  const  MINIMUM_PHP_VERSION = '7.0' ;
+  private static  $_instance = null ;
+    public static function instance(){
+        if ( is_null( self::$_instance ) ) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
+    
+    public function __construct(){
+					add_action( 'plugins_loaded', [ $this,'ladesprachdateifuerpowersettingsforelementor'] );
+					add_action( 'plugins_loaded', [ $this, 'onpluginsloaded' ] );
+					add_action( 'elementor/element/wp-page/document_settings/before_section_end', [ $this, 'qanvapowerusertools' ], 10, 2 );
+					##
+					add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),[ $this, 'addextrapowertoolslinks' ],10,1 );
+					add_action( 'admin_menu', [ $this, 'addextrapowertoolspage' ] );
+					add_action( 'admin_footer', [ $this, 'extra_elementormenu_css' ] );
+					add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'extra_elementormenu_buttons_admin' ] );
+					add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'extra_elementormenu_buttons_admin_css' ] );
+					add_action( 'wp_ajax_setnewpermaname', [ $this, 'setnewpermaname' ] );
+    }
+
+    public function ladesprachdateifuerpowersettingsforelementor() {
+					$pfad = dirname( plugin_basename(__FILE__) ) . '/languages/';
+					load_plugin_textdomain( 'qanva-powertools-for-elementor', false, $pfad );
+    } 
+
+    public function onpluginsloaded(){
+					if ( $this->is_compatible() ) {
+						add_action( 'elementor/init', [ $this, 'init' ] );
+					}
+    }   
+				
+    /** Link im Plugin-Eintrag Plugin Seite **/
+    public function addextrapowertoolslinks( array $links ){
+					$url = get_admin_url() . 'options-general.php?page=qanva-powertools';
+					$teamlinks = '<a href="' . $url . '" >' . __( "Settings", "qanva-powertools-for-elementor" ) . '</a> | ';
+					$links['qanva-powertools-for-elementor-link'] = $teamlinks;
+						return $links;
+    }
+				
+    public function addextrapowertoolspage(){
+					add_submenu_page(
+						'',
+						'',
+						'',
+						'manage_options',
+						'qanva-powertools',
+						[ $this, 'extrapowertoolscontent' ]
+					);
+    }
+    
+    public function extrapowertoolscontent(){
+     include_once 'settings.php';
+    }
+
+    public function extra_elementormenu_css(){
+					wp_enqueue_style( 'qanva-powertools-for-elementor-admin', plugin_dir_url( __FILE__ ) . 'css/qanva-powertools-for-elementor-admin.css', true, MAKEPOWERSETTINGSVERSION, 'all' );
+				}
+
+		/** Check required min versions **/
+    public function is_compatible(){     
+						if ( !did_action( 'elementor/loaded' ) ) {
+										add_action( 'admin_notices', [ $this, 'admin_notice_missing_main_plugin' ] );
+										return false;
+						}
+						if ( !version_compare( ELEMENTOR_VERSION, self::MINIMUM_ELEMENTOR_VERSION, '>=' ) ) {
+										add_action( 'admin_notices', [ $this, 'admin_notice_minimum_elementor_version' ] );
+										return false;
+						}
+						if ( version_compare( PHP_VERSION, self::MINIMUM_PHP_VERSION, '<' ) ) {
+										add_action( 'admin_notices', [ $this, 'admin_notice_minimum_php_version' ] );
+										return false;
+						}        
+							return true;
+    }
+    
+    public function admin_notice_missing_main_plugin() {
+						if ( isset( $_GET['activate'] ) ) unset( $_GET['activate'] );
+						$message = sprintf(
+								esc_html__( '"%1$s" requires "%2$s" to be installed and activated.', 'qanva-powertools-for-elementor' ),
+								'<strong>' . esc_html__( 'POWER SETTINGS for Elementor', 'qanva-powertools-for-elementor' ) . '</strong>',
+								'<strong>' . esc_html__( 'Elementor', 'qanva-powertools-for-elementor' ) . '</strong>'
+						);
+							printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
+    }
+    
+    public function admin_notice_minimum_elementor_version() {
+						if ( isset( $_GET['activate'] ) ) unset( $_GET['activate'] );
+						$message = sprintf(
+								esc_html__( '"%1$s" requires min version "%2$s" of Elementor to be installed.', 'qanva-powertools-for-elementor' ),
+								'<strong>' . esc_html__( 'POWER SETTINGS for Elementor', 'qanva-powertools-for-elementor' ) . '</strong>',
+								'<strong>' . MINIMUM_ELEMENTOR_VERSION . '</strong>'
+						);
+							printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
+    }
+    
+    public function admin_notice_minimum_php_version() {
+						if ( isset( $_GET['activate'] ) ) unset( $_GET['activate'] );
+						$message = sprintf(
+								esc_html__( '"%1$s" requires min PHP version "%2$s" running.', 'qanva-powertools-for-elementor' ),
+								'<strong>' . esc_html__( 'POWER SETTINGS for Elementor', 'qanva-powertools-for-elementor' ) . '</strong>',
+								'<strong>' . MINIMUM_PHP_VERSION . '</strong>'
+						);
+							printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
+    }
+    
+		public function init(){
+			add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'powersettings_scripts' ] );
+		}
+		 
+		public function qanvapowerusertools( \Elementor\Core\DocumentTypes\PageBase $page ) {
+			global $post;
+				$page->add_control(
+				'control_id',
+				[
+					'label' => 'Poweruser tools',
+					'type' => \Elementor\Controls_Manager::HEADING,
+					'separator' => 'before',
+				]
+				);
+				
+				$page->add_control(
+					'qanva_pt_use',
+					[
+						'label' => __( 'Remove widget names', 'qanva-powertools-for-elementor' ), 
+						'description' => __( 'Remove widget names to save space.', 'qanva-powertools-for-elementor' ), 
+						'separator' => '', 
+						'type' => \Elementor\Controls_Manager::SWITCHER,
+						'label_on' => __( 'Yes', 'qanva-powertools-for-elementor' ),
+						'label_off' => __( 'No', 'qanva-powertools-for-elementor' ),
+						'return_value' => 'yes',
+						'default' => 'no',
+						'frontend_available' => false,
+					]
+				);	
+			
+				$page->add_control(
+					'qanva_pt_use_tt',
+					[
+						'label' => __( 'Tooltip widget names', 'qanva-powertools-for-elementor' ), 
+						'description' => __( 'Show widget names as tooltip.', 'qanva-powertools-for-elementor' ), 
+						'separator' => 'after', 
+						'type' => \Elementor\Controls_Manager::SWITCHER,
+						'label_on' => __( 'Yes', 'qanva-powertools-for-elementor' ),
+						'label_off' => __( 'No', 'qanva-powertools-for-elementor' ),
+						'return_value' => 'yes',
+						'default' => 'no',
+						'frontend_available' => false,
+						'condition' => [
+									'qanva_pt_use' => 'yes', 
+								],
+					]
+				);	
+
+				$page->add_control(
+					'qanva_pt_width',
+					[
+						'label' => '',
+						'type' => \Elementor\Controls_Manager::RAW_HTML,
+						'raw' => '<div style="margin-top:5px;width:47%;float:left;">' . __( 'Widget column count', 'qanva-powertools-for-elementor' ) . '</div><div id="qanva_pt_width_after"><select id="qanva_pt_width" onchange="ptwidthchange(this.value,\'x\')"><option value="2" selected>standard</option><option value="3">3</option><option value="4">4</option></select><i class="eicon-sort-down" id="qanva_pt_width_after_icon"></i></div>',
+					]
+				);		
+			
+				$page->add_control(
+					'qanva_pt_rem_wp',
+					[
+						'label' => __( 'Remove WP widgets', 'qanva-powertools-for-elementor' ), 
+						'description' => __( 'Remove the WordPress widgets from Elementor editor.', 'qanva-powertools-for-elementor' ), 
+						'separator' => 'before', 
+						'type' => \Elementor\Controls_Manager::SWITCHER,
+						'label_on' => __( 'Yes', 'qanva-powertools-for-elementor' ),
+						'label_off' => __( 'No', 'qanva-powertools-for-elementor' ),
+						'return_value' => 'yes',
+						'default' => 'no',
+						'frontend_available' => false,
+					]
+				);	
+				
+				$page->add_control(
+					'qanva_pt_tipp',
+					[
+						'label' => '',
+						'type' => \Elementor\Controls_Manager::RAW_HTML,
+						'raw' => "<script id='tta'>setInterval(function(){
+							if(document.querySelector('[data-setting=\"qanva_pt_use\"]') !== null && document.querySelector('[data-setting=\"qanva_pt_use_tt\"]') !== null){if(document.querySelector('[data-setting=\"qanva_pt_use\"]').checked === true && document.querySelector('[data-setting=\"qanva_pt_use_tt\"]').checked === true && 
+							localStorage.getItem('qanva_powertools_tt') === null){ 
+								localStorage.setItem('qanva_powertools_tt','yes');
+							}
+							if(document.querySelector('[data-setting=\"qanva_pt_use_tt\"]').checked === false || document.querySelector('[data-setting=\"qanva_pt_use\"]').checked === false){
+								localStorage.removeItem('qanva_powertools_tt');
+							};
+						}},200);</script><style>#qanva_pt_width{appearance:none;-webkit-appearance:none;float:right;padding: 0 0 0 5px;} #qanva_pt_width_after{width:52%;height:27px;position:relative;float:right}#qanva_pt_width_after_icon{position:absolute;right:6px;top:6px}</style>",
+					]
+				);		
+
+				$page->add_control(
+					'control_qanvaeeb_id',
+					[
+						'label' => __( 'Set Page Permalink', 'qanva-powertools-for-elementor' ),
+						'type' => \Elementor\Controls_Manager::HEADING,
+						'separator' => 'before',
+					]
+				);
+					
+					$page->add_control(
+						'qanva_eeb_perma',
+						[
+							'label' => '',
+							'type' => \Elementor\Controls_Manager::RAW_HTML,
+							'raw' => '<div id="qanvaeebwrapper"><input type="text" pattern="[a-z0-9]{2,}[-][a-z0-9]{1,}" value="' . $post->post_name . '" name="qanvanewpname" id="qanvanewpname"><button id="qanvasaveperma">' . __( 'Save', 'qanva-powertools-for-elementor' ) . '</button></div>',
+						]
+					);
+		}
+		
+    public function extra_elementormenu_buttons_admin(){
+        global  $wpdb;
+        $savevalues = [];
+        /** clonen **/
+        if( isset( $_POST[ 'openmyclone' ] ) ){
+         $id = sanitize_text_field( $_POST[ 'qanvaeebcloneselect' ] );
+            $p = get_post( $id );
+            $pagename = $p->post_name;
+            if('' != $_POST[ 'qanvaeebperma' ]){
+             $pagename = strtolower(sanitize_text_field( $_POST[ 'qanvaeebperma' ] ));
+            }
+            if ($p == null) return false;
+            		$newpost = array(
+               'post_name'				=> $pagename,
+               'post_type'				=> $p->post_type,
+               'ping_status'			=> $p->ping_status,
+               'post_parent'			=> $p->post_parent,
+               'menu_order'			=> $p->menu_order,
+               'post_password'			=> $p->post_password,
+               'post_excerpt'			=> $p->post_excerpt,
+               'comment_status'		=> $p->comment_status,
+               'post_title'			=> ucfirst($pagename),
+               'post_content'			=> $p->post_content,
+               'post_author'			=> $p->post_author,
+               'to_ping'				=> $p->to_ping,
+               'pinged'				=> $p->pinged,
+               'post_content_filtered' => $p->post_content_filtered,
+               'post_category'			=> $p->post_category,
+               'tags_input'			=> $p->tags_input,
+               'tax_input'				=> $p->tax_input,
+               'page_template'			=> $p->page_template,
+               'post_status' => 'publish',
+               'post_date' => $p->post_date,
+               'post_date_gmt' => $p->post_date_gmt,
+              );
+
+              $newid = wp_insert_post($newpost);
+              $format = get_post_format($id);
+              set_post_format($newid, $format);
+              
+              /** copy taxonomies  **/
+              $taxonomies = get_object_taxonomies( $p->post_type );
+              if ( !empty( $taxonomies ) && is_array( $taxonomies ) ) {
+               foreach ( $taxonomies as $taxonomy ) {
+                $terms = wp_get_object_terms( $p->ID, $taxonomy, [ 'fields' => 'slugs' ] );
+                wp_set_object_terms( $newid, $terms, $taxonomy, false );
+               }
+              }
+
+              /** copy meta **/
+              $entries = $wpdb->get_results(
+               $wpdb->prepare( "SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d", $id )
+              );
+
+              if ( is_array( $entries ) ) {
+               $query = "INSERT INTO {$wpdb->postmeta} ( post_id, meta_key, meta_value ) VALUES ";
+               $records = [];
+               foreach ( $entries as $entry ) {
+                $value = wp_slash( $entry->meta_value );
+                $records[] = "( $newid, '{$entry->meta_key}', '{$value}' )";
+               }
+               $query .= implode( ', ', $records ) . ';';
+               $wpdb->query( $query );
+
+              }
+              
+              if( 1 == get_option( 'qanva_buttons_for_elementor_clone' )[1] ){
+               echo '<meta http-equiv="refresh" content="0; url=post.php?post=' . $newid . '&action=elementor">';
+                exit;
+              }
+             
+        }
+   
+        
+        $jumper = get_option( 'qanva_buttons_for_elementor_select' );
+        $jumperc = get_option( 'qanva_buttons_for_elementor_clone' );
+        if ( !empty(get_option( 'qanva_buttons_for_elementor' )) ) {
+            $savevalues = get_option( 'qanva_buttons_for_elementor' );
+        }
+        $buttonwerte = array_reverse( $savevalues );
+        $linkval = '';
+        $linkvalb = '';
+        $allposts = get_posts();
+        $allpages = get_pages( [
+            'post_type'   => 'page',
+            'sort_column' => 'ID',
+            'post_status' => 'publish,draft',
+        ] );
+        $alllandingpages = $wpdb->get_results( "SELECT * FROM " . $wpdb->prefix . "posts WHERE post_type='e-landing-page'" );
+        $alltemplates = $wpdb->get_results( "SELECT * FROM " . $wpdb->prefix . "posts WHERE post_type='elementor_library'" );
+        $pagetypes = [ 'page', 'post', 'e-landing-page' ];
+        $isaktid = get_the_ID();
+        if ( !empty(get_option( 'elementor_cpt_support' )) ) {
+            $pagetypes = get_option( 'elementor_cpt_support' );
+        }
+        if ( in_array( 'post', $pagetypes ) ) {
+            for ( $x = 0 ;  $x < count( $allposts ) ;  $x++ ) {
+             $adda = '';
+             if($allposts[$x]->ID == $isaktid){
+              $adda = 'selected';
+             }
+                $linkval .= '<option value="' . $allposts[$x]->ID . '">Post-Title: ' . $allposts[$x]->post_title . ' - (' . __( $allposts[$x]->post_name ) . ')</option>';
+                $linkvalb .= '<option value="' . $allposts[$x]->ID . '" ' . $adda . '>Post-Title: ' . $allposts[$x]->post_title . ' - (' . __( $allposts[$x]->post_name ) . ')</option>';
+            }
+        }
+        if ( in_array( 'page', $pagetypes ) ) {
+            for ( $y = 0 ;  $y < count( $allpages ) ;  $y++ ) {
+              $pname = $allpages[$y]->post_name;
+              if( '' == $allpages[$y]->post_name ){
+                $pname = $allpages[$y]->post_title;
+              }
+             $addb = '';
+             if($allpages[$y]->ID == $isaktid){
+              $addb = 'selected';
+             }
+                $linkval .= '<option value="' . $allpages[$y]->ID . '">Page-Title: ' . $allpages[$y]->post_title . ' - (' .  $pname .  ')</option>';
+                $linkvalb .= '<option value="' . $allpages[$y]->ID . '" ' . $addb . '>Page-Title: ' . $allpages[$y]->post_title . ' - (' .  $pname .  ')</option>';
+            }
+        }
+        if ( in_array( 'e-landing-page', $pagetypes ) ) {
+            for ( $q = 0 ;  $q < count( $alllandingpages ) ;  $q++ ) {
+             $addc = '';
+             if(alllandingpages[$q]->ID == $isaktid){
+              $addc = 'selected';
+             }
+                $linkval .= '<option value="' . $alllandingpages[$q]->ID . '">Landingpage: ' . $alllandingpages[$q]->post_name . ' - (' . $alllandingpages[$q]->post_title  . ')</option>';
+                $linkvalb .= '<option value="' . $alllandingpages[$q]->ID . '" ' . $addc . '>Landingpage: ' . $alllandingpages[$q]->post_name . ' - (' . $alllandingpages[$q]->post_title  . ')</option>';
+            }
+        }
+        for ( $z = 0 ;  $z < count( $alltemplates ) ;  $z++ ) {
+            if ( 'standard-kit' != $alltemplates[$z]->post_name ) {
+             $addd = '';
+             if($alltemplates[$z]->ID == $isaktid){
+              $addd = 'selected';
+             }
+                $linkval .= '<option value="' . $alltemplates[$z]->ID . '">Templates: ' . $alltemplates[$z]->post_name . ' - (' . $alltemplates[$z]->post_title . ')</option>';
+                $linkvalb .= '<option value="' . $alltemplates[$z]->ID . '" ' . $addd . '>Templates: ' . $alltemplates[$z]->post_name . ' - (' . $alltemplates[$z]->post_title . ')</option>';
+            }
+        }
+        
+        $clonetext = __( 'Clone', 'qanva-powertools-for-elementor' );
+        if(1 == $jumperc[1]){
+         $clonetext =   __( 'Clone and open', 'qanva-powertools-for-elementor' );
+        }
+            
+        if ( 1 == $jumper ) {
+            echo  '<style>' ;
+            echo  "#qanvaeebselect,#qanvaeebcloneselect{border:none;appearance: none;-webkit-appearance: none;-moz-appearance: none;cursor: pointer;height:40px;background:white url(\"data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0z' fill='white'/><path d='M7 10l5 5 5-5z'/></svg>\") no-repeat 95%;border: 1px solid #e6e9ec;padding: 3px 35px 3px 15px;border-radius:0;margin:0 0 10px 0}" ;
+            echo  '</style>' ;
+        }
+            echo  "\n";
+        ?>
+            <script id="extrabuttons-back-js">
+            var jumper = 'off';
+            var linkliste = '';
+            <?php 
+            echo  'var seltext = "' . __( 'Select to open', 'qanva-powertools-for-elementor' ) . '";' . "\n" ;
+
+            if ( 1 == $jumper ) {
+                echo  'jumper = "on";' . "\n" ;
+                echo  "linkliste = '" . $linkval . "';" . "\n" ;
+            }
+            if(1 == $jumperc[0]){
+             echo 'var cloning = "on";' . "\n";
+            }
+            else{
+             echo 'var cloning = "off";' . "\n";
+            }
+
+            $linkurl = '';
+            $target = '';
+            $name = '';
+            foreach ( $buttonwerte as $key => $val ) {
+                $linkurl .= '"' . $val[0] . '",';
+                $target .= '"' . $val[1] . '",';
+                $name .= '"' . $val[2] . '",';
+            }
+            echo  'var qanva_extrabutton_url = [' . substr( $linkurl, 0, -1 ) . '];' . "\n" ;
+            echo  'var qanva_extrabutton_target = [' . substr( $target, 0, -1 ) . '];' . "\n" ;
+            echo  'var qanva_extrabutton_text = [' . substr( $name, 0, -1 ) . '];' . "\n" ;
+            echo  'var qanva_extrabutton_self = "' . __( 'Open in same window', 'qanva-powertools-for-elementor' ) . '"' . ";\n" ;
+            echo  'var qanva_extrabutton_new = "' . __( 'Open in new window', 'qanva-powertools-for-elementor' ) . '"' . ";\n" ;
+            echo  'var qanva_extrabutton_open = "' . __( 'Open', 'qanva-powertools-for-elementor' ) . '"' . ";\n" ;
+            echo  'var qanva_extrabutton_clone = "' . $clonetext . '"' . ";\n" ;
+
+            ?>
+            </script>
+												
+            <div id="qanvaeeboverlay">
+            <div class="qanvaeebinfo">
+            <form method="post" action="">
+            <select name="qanvaeebcloneselect" id="qanvaeebcloneselect" autocomplete="off"><option><?=__( 'Select to clone', 'qanva-powertools-for-elementor' )?></option>
+            <?=$linkvalb?>
+            </select><br>
+            <?=__( 'Set new name of clone (optional)', 'qanva-powertools-for-elementor' )?><br>
+            <input name="qanvaeebperma" type="text" pattern="[a-z0-9]{2,}[a-z0-9-]{1,}" autocomplete="off" title="<?=__( 'Only small letters, numbers and dash allowed, begin with min 4 characters', 'qanva-powertools-for-elementor' )?>"><br>
+            <input type="submit" name="openmyclone" value="<?=$clonetext?>">
+            <input type="button" onclick="document.getElementById('qanvaeeboverlay').style.display='none';" value="<?=__( 'Cancel', 'qanva-powertools-for-elementor' )?>">
+            </form>
+            </div>
+            </div>
+        <?php 
+        
+    }
+				
+		public function powersettings_scripts(){
+    wp_enqueue_script('qanva_powertools',plugins_url( 'js/qanvapower_back.js', __FILE__ ),[ 'jquery' ],MAKEPOWERSETTINGSVERSION );
+		}
+		
+		public function extra_elementormenu_buttons_admin_css(){
+			wp_enqueue_style('qanva_pt_style',plugins_url( 'css/qanvapower_back.css', __FILE__ ),true,MAKEPOWERSETTINGSVERSION,'all' );
+		}
+		
+		function setnewpermaname() {
+				global $wpdb;
+					$data = [ 'post_name' => sanitize_text_field($_POST['newname']) ];
+					$where = [ 'id' => sanitize_text_field($_POST['postid']) ];
+					$wpdb->update($wpdb->prefix . 'posts',$data,$where );
+					wp_die();
+		}
+}
+
+ MAKEPOWERSETTINGSELEMENTOR::instance();
