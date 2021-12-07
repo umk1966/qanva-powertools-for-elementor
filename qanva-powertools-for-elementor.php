@@ -143,7 +143,8 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 		public function init(){
 			add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'powersettings_scripts' ] );
 		}
-		 
+		
+		/** Elementor controls **/		
 		public function qanvapowerusertools( \Elementor\Core\DocumentTypes\PageBase $page ) {
 			global $post;
 				$page->add_control(
@@ -238,20 +239,85 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 					]
 				);
 					
-					$page->add_control(
-						'qanva_eeb_perma',
-						[
-							'label' => '',
-							'type' => \Elementor\Controls_Manager::RAW_HTML,
-							'raw' => '<div id="qanvaeebwrapper"><input type="text" pattern="[a-z0-9]{2,}[-][a-z0-9]{1,}" value="' . $post->post_name . '" name="qanvanewpname" id="qanvanewpname"><button id="qanvasaveperma">' . __( 'Save', 'qanva-powertools-for-elementor' ) . '</button></div>',
-						]
-					);
+				$page->add_control(
+					'qanva_eeb_perma',
+					[
+						'label' => '',
+						'type' => \Elementor\Controls_Manager::RAW_HTML,
+						'raw' => '<div id="qanvaeebwrapper"><input type="text" pattern="[a-z0-9]{2,}[-][a-z0-9]{1,}" value="' . $post->post_name . '" name="qanvanewpname" id="qanvanewpname"><button id="qanvasaveperma">' . __( 'Save', 'qanva-powertools-for-elementor' ) . '</button></div>',
+					]
+				);
 		}
 		
-    public function extra_elementormenu_buttons_admin(){
+    /** read all posts, pages, landing-pages and create option-list **/
+				public function eebaoptionmaker(){
+					global  $wpdb;
+						$linkval = '';
+						$linkvalb = '';
+						$allposts = get_posts();
+						$allpages = get_pages( [
+										'post_type'   => 'page',
+										'sort_column' => 'ID',
+										'post_status' => 'publish,draft',
+						] );
+						$alllandingpages = $wpdb->get_results( "SELECT * FROM " . $wpdb->prefix . "posts WHERE post_type='e-landing-page'" );
+						$alltemplates = $wpdb->get_results( "SELECT * FROM " . $wpdb->prefix . "posts WHERE post_type='elementor_library'" );
+						$pagetypes = [ 'page', 'post', 'e-landing-page' ];
+						$isaktid = get_the_ID();
+						if ( !empty(get_option( 'elementor_cpt_support' )) ) {
+										$pagetypes = get_option( 'elementor_cpt_support' );
+						}
+						if ( in_array( 'post', $pagetypes ) ) {
+							for ( $x = 0 ;  $x < count( $allposts ) ;  $x++ ) {
+								$adda = '';
+								if($allposts[$x]->ID == $isaktid){
+									$adda = 'selected';
+								}
+										$linkval .= '<option value="' . $allposts[$x]->ID . '">Post-Title: ' . $allposts[$x]->post_title . ' - (' . __( $allposts[$x]->post_name ) . ')</option>';
+										$linkvalb .= '<option value="' . $allposts[$x]->ID . '" ' . $adda . '>Post-Title: ' . $allposts[$x]->post_title . ' - (' . __( $allposts[$x]->post_name ) . ')</option>';
+							}
+						}
+						if ( in_array( 'page', $pagetypes ) ) {
+							for ( $y = 0 ;  $y < count( $allpages ) ;  $y++ ) {
+									$pname = $allpages[$y]->post_name;
+									if( '' == $allpages[$y]->post_name ){
+											$pname = $allpages[$y]->post_title;
+									}
+								$addb = '';
+								if($allpages[$y]->ID == $isaktid){
+									$addb = 'selected';
+								}
+										$linkval .= '<option value="' . $allpages[$y]->ID . '">Page-Title: ' . $allpages[$y]->post_title . ' - (' .  $pname .  ')</option>';
+										$linkvalb .= '<option value="' . $allpages[$y]->ID . '" ' . $addb . '>Page-Title: ' . $allpages[$y]->post_title . ' - (' .  $pname .  ')</option>';
+							}
+						}
+						if ( in_array( 'e-landing-page', $pagetypes ) ) {
+							for ( $q = 0 ;  $q < count( $alllandingpages ) ;  $q++ ) {
+								$addc = '';
+								if(alllandingpages[$q]->ID == $isaktid){
+									$addc = 'selected';
+								}
+										$linkval .= '<option value="' . $alllandingpages[$q]->ID . '">Landingpage: ' . $alllandingpages[$q]->post_name . ' - (' . $alllandingpages[$q]->post_title  . ')</option>';
+										$linkvalb .= '<option value="' . $alllandingpages[$q]->ID . '" ' . $addc . '>Landingpage: ' . $alllandingpages[$q]->post_name . ' - (' . $alllandingpages[$q]->post_title  . ')</option>';
+							}
+						}
+						for ( $z = 0 ;  $z < count( $alltemplates ) ;  $z++ ) {
+							if ( 'standard-kit' != $alltemplates[$z]->post_name ) {
+								$addd = '';
+								if($alltemplates[$z]->ID == $isaktid){
+									$addd = 'selected';
+								}
+										$linkval .= '<option value="' . $alltemplates[$z]->ID . '">Templates: ' . $alltemplates[$z]->post_name . ' - (' . $alltemplates[$z]->post_title . ')</option>';
+										$linkvalb .= '<option value="' . $alltemplates[$z]->ID . '" ' . $addd . '>Templates: ' . $alltemplates[$z]->post_name . ' - (' . $alltemplates[$z]->post_title . ')</option>';
+							}
+						}
+						return [$linkval, $linkvalb];
+				}
+				
+    /** clonen **/
+				public function extra_elementormenu_buttons_admin(){
         global  $wpdb;
-        $savevalues = [];
-        /** clonen **/
+        
         if( isset( $_POST[ 'openmyclone' ] ) ){
          $id = sanitize_text_field( $_POST[ 'qanvaeebcloneselect' ] );
             $p = get_post( $id );
@@ -313,9 +379,9 @@ final class MAKEPOWERSETTINGSELEMENTOR{
                $wpdb->query( $query );
 
               }
-              
+              /** open clone in Elementor **/
               if( 1 == get_option( 'qanva_buttons_for_elementor_clone' )[1] ){
-               echo '<meta http-equiv="refresh" content="0; url=post.php?post=' . $newid . '&action=elementor">';
+               echo '<meta http-equiv="refresh" content="0; url=post.php?post=' . esc_attr($newid) . '&action=elementor">';
                 exit;
               }
              
@@ -324,73 +390,10 @@ final class MAKEPOWERSETTINGSELEMENTOR{
         
         $jumper = get_option( 'qanva_buttons_for_elementor_select' );
         $jumperc = get_option( 'qanva_buttons_for_elementor_clone' );
-        if ( !empty(get_option( 'qanva_buttons_for_elementor' )) ) {
-            $savevalues = get_option( 'qanva_buttons_for_elementor' );
-        }
-        $buttonwerte = array_reverse( $savevalues );
-        $linkval = '';
-        $linkvalb = '';
-        $allposts = get_posts();
-        $allpages = get_pages( [
-            'post_type'   => 'page',
-            'sort_column' => 'ID',
-            'post_status' => 'publish,draft',
-        ] );
-        $alllandingpages = $wpdb->get_results( "SELECT * FROM " . $wpdb->prefix . "posts WHERE post_type='e-landing-page'" );
-        $alltemplates = $wpdb->get_results( "SELECT * FROM " . $wpdb->prefix . "posts WHERE post_type='elementor_library'" );
-        $pagetypes = [ 'page', 'post', 'e-landing-page' ];
-        $isaktid = get_the_ID();
-        if ( !empty(get_option( 'elementor_cpt_support' )) ) {
-            $pagetypes = get_option( 'elementor_cpt_support' );
-        }
-        if ( in_array( 'post', $pagetypes ) ) {
-            for ( $x = 0 ;  $x < count( $allposts ) ;  $x++ ) {
-             $adda = '';
-             if($allposts[$x]->ID == $isaktid){
-              $adda = 'selected';
-             }
-                $linkval .= '<option value="' . $allposts[$x]->ID . '">Post-Title: ' . $allposts[$x]->post_title . ' - (' . __( $allposts[$x]->post_name ) . ')</option>';
-                $linkvalb .= '<option value="' . $allposts[$x]->ID . '" ' . $adda . '>Post-Title: ' . $allposts[$x]->post_title . ' - (' . __( $allposts[$x]->post_name ) . ')</option>';
-            }
-        }
-        if ( in_array( 'page', $pagetypes ) ) {
-            for ( $y = 0 ;  $y < count( $allpages ) ;  $y++ ) {
-              $pname = $allpages[$y]->post_name;
-              if( '' == $allpages[$y]->post_name ){
-                $pname = $allpages[$y]->post_title;
-              }
-             $addb = '';
-             if($allpages[$y]->ID == $isaktid){
-              $addb = 'selected';
-             }
-                $linkval .= '<option value="' . $allpages[$y]->ID . '">Page-Title: ' . $allpages[$y]->post_title . ' - (' .  $pname .  ')</option>';
-                $linkvalb .= '<option value="' . $allpages[$y]->ID . '" ' . $addb . '>Page-Title: ' . $allpages[$y]->post_title . ' - (' .  $pname .  ')</option>';
-            }
-        }
-        if ( in_array( 'e-landing-page', $pagetypes ) ) {
-            for ( $q = 0 ;  $q < count( $alllandingpages ) ;  $q++ ) {
-             $addc = '';
-             if(alllandingpages[$q]->ID == $isaktid){
-              $addc = 'selected';
-             }
-                $linkval .= '<option value="' . $alllandingpages[$q]->ID . '">Landingpage: ' . $alllandingpages[$q]->post_name . ' - (' . $alllandingpages[$q]->post_title  . ')</option>';
-                $linkvalb .= '<option value="' . $alllandingpages[$q]->ID . '" ' . $addc . '>Landingpage: ' . $alllandingpages[$q]->post_name . ' - (' . $alllandingpages[$q]->post_title  . ')</option>';
-            }
-        }
-        for ( $z = 0 ;  $z < count( $alltemplates ) ;  $z++ ) {
-            if ( 'standard-kit' != $alltemplates[$z]->post_name ) {
-             $addd = '';
-             if($alltemplates[$z]->ID == $isaktid){
-              $addd = 'selected';
-             }
-                $linkval .= '<option value="' . $alltemplates[$z]->ID . '">Templates: ' . $alltemplates[$z]->post_name . ' - (' . $alltemplates[$z]->post_title . ')</option>';
-                $linkvalb .= '<option value="' . $alltemplates[$z]->ID . '" ' . $addd . '>Templates: ' . $alltemplates[$z]->post_name . ' - (' . $alltemplates[$z]->post_title . ')</option>';
-            }
-        }
         
         $clonetext = __( 'Clone', 'qanva-powertools-for-elementor' );
         if(1 == $jumperc[1]){
-         $clonetext =   __( 'Clone and open', 'qanva-powertools-for-elementor' );
+         $clonetext = __( 'Clone and open', 'qanva-powertools-for-elementor' );
         }
             
         if ( 1 == $jumper ) {
@@ -398,74 +401,91 @@ final class MAKEPOWERSETTINGSELEMENTOR{
             echo  "#qanvaeebselect,#qanvaeebcloneselect{border:none;appearance: none;-webkit-appearance: none;-moz-appearance: none;cursor: pointer;height:40px;background:white url(\"data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0z' fill='white'/><path d='M7 10l5 5 5-5z'/></svg>\") no-repeat 95%;border: 1px solid #e6e9ec;padding: 3px 35px 3px 15px;border-radius:0;margin:0 0 10px 0}" ;
             echo  '</style>' ;
         }
-            echo  "\n";
         ?>
-            <script id="extrabuttons-back-js">
-            var jumper = 'off';
-            var linkliste = '';
-            <?php 
-            echo  'var seltext = "' . __( 'Select to open', 'qanva-powertools-for-elementor' ) . '";' . "\n" ;
-
-            if ( 1 == $jumper ) {
-                echo  'jumper = "on";' . "\n" ;
-                echo  "linkliste = '" . $linkval . "';" . "\n" ;
-            }
-            if(1 == $jumperc[0]){
-             echo 'var cloning = "on";' . "\n";
-            }
-            else{
-             echo 'var cloning = "off";' . "\n";
-            }
-
-            $linkurl = '';
-            $target = '';
-            $name = '';
-            foreach ( $buttonwerte as $key => $val ) {
-                $linkurl .= '"' . $val[0] . '",';
-                $target .= '"' . $val[1] . '",';
-                $name .= '"' . $val[2] . '",';
-            }
-            echo  'var qanva_extrabutton_url = [' . substr( $linkurl, 0, -1 ) . '];' . "\n" ;
-            echo  'var qanva_extrabutton_target = [' . substr( $target, 0, -1 ) . '];' . "\n" ;
-            echo  'var qanva_extrabutton_text = [' . substr( $name, 0, -1 ) . '];' . "\n" ;
-            echo  'var qanva_extrabutton_self = "' . __( 'Open in same window', 'qanva-powertools-for-elementor' ) . '"' . ";\n" ;
-            echo  'var qanva_extrabutton_new = "' . __( 'Open in new window', 'qanva-powertools-for-elementor' ) . '"' . ";\n" ;
-            echo  'var qanva_extrabutton_open = "' . __( 'Open', 'qanva-powertools-for-elementor' ) . '"' . ";\n" ;
-            echo  'var qanva_extrabutton_clone = "' . $clonetext . '"' . ";\n" ;
-
-            ?>
-            </script>
-												
-            <div id="qanvaeeboverlay">
-            <div class="qanvaeebinfo">
-            <form method="post" action="">
-            <select name="qanvaeebcloneselect" id="qanvaeebcloneselect" autocomplete="off"><option><?=__( 'Select to clone', 'qanva-powertools-for-elementor' )?></option>
-            <?=$linkvalb?>
-            </select><br>
-            <?=__( 'Set new name of clone (optional)', 'qanva-powertools-for-elementor' )?><br>
-            <input name="qanvaeebperma" type="text" pattern="[a-z0-9]{2,}[a-z0-9-]{1,}" autocomplete="off" title="<?=__( 'Only small letters, numbers and dash allowed, begin with min 4 characters', 'qanva-powertools-for-elementor' )?>"><br>
-            <input type="submit" name="openmyclone" value="<?=$clonetext?>">
-            <input type="button" onclick="document.getElementById('qanvaeeboverlay').style.display='none';" value="<?=__( 'Cancel', 'qanva-powertools-for-elementor' )?>">
-            </form>
-            </div>
-            </div>
+									<!-- modal -->			
+									<div id="qanvaeeboverlay">
+									<div class="qanvaeebinfo">
+									<form method="post" action="">
+									<select name="qanvaeebcloneselect" id="qanvaeebcloneselect" autocomplete="off"><option><?php _e( 'Select to clone', 'qanva-powertools-for-elementor' );?></option>
+									<?php echo $this->eebaoptionmaker()[1];?>
+									</select><br>
+									<?php _e( 'Set new name of clone (optional)', 'qanva-powertools-for-elementor' )?><br>
+									<input name="qanvaeebperma" type="text" pattern="[a-z0-9]{2,}[a-z0-9-]{1,}" autocomplete="off" title="<?php _e( 'Only small letters, numbers and dash allowed, begin with min 4 characters', 'qanva-powertools-for-elementor' )?>"><br>
+									<input type="submit" name="openmyclone" value="<?php echo esc_attr($clonetext);?>">
+									<input type="button" onclick="document.getElementById('qanvaeeboverlay').style.display='none';" value="<?php _e( 'Cancel', 'qanva-powertools-for-elementor' )?>">
+									</form>
+									</div>
+									</div>
         <?php 
         
     }
 				
-		public function powersettings_scripts(){
+		/** react to saved values and send to JS **/		
+		public function powersettings_scripts(){ 
+   $savevalues = [];
+			$jumper = get_option( 'qanva_buttons_for_elementor_select' );
+			$jumperc = get_option( 'qanva_buttons_for_elementor_clone' );
+			if ( !empty(get_option( 'qanva_buttons_for_elementor' )) ) {
+				$savevalues = get_option( 'qanva_buttons_for_elementor' );
+			}
+			
+			$buttonwerte = array_reverse( $savevalues );  
+			
+			$clonetext = __( 'Clone', 'qanva-powertools-for-elementor' );
+			if(1 == $jumperc[1]){
+				$clonetext = __( 'Clone and open', 'qanva-powertools-for-elementor' );
+			}
+			
+			if ( 1 == $jumper ) {
+				$jumpval = "on";
+			}
+			else{
+				$jumpval = "off";
+			}
+			if(1 == $jumperc[0]){
+				$cloning = "on";
+			}
+			else{
+				$cloning = "off";
+			}
+
+			$linkurl ='';
+			$target ='';
+			$name ='';
+			if(!empty($buttonwerte)){
+				foreach ( $buttonwerte as $key => $val ) {
+					$linkurl .= '"' . $val[0] . '",';
+					$target .= '"' . $val[1] . '",';
+					$name .= '"' . $val[2] . '",';
+				}
+			}
+
     wp_enqueue_script('qanva_powertools',plugins_url( 'js/qanvapower_back.js', __FILE__ ),[ 'jquery' ],MAKEPOWERSETTINGSVERSION );
+				wp_localize_script('qanva_powertools','qanvapowertoolsvals',[
+				'seltext' => __( 'Select to open', 'qanva-powertools-for-elementor' ),
+				'jumper' => $jumpval,
+				'cloning' => $cloning,
+				'linkliste' => $this->eebaoptionmaker()[0],
+				'qanva_extrabutton_url' => [substr( $linkurl, 0, -1 )],
+				'qanva_extrabutton_target' => [substr( $target, 0, -1 )],
+				'qanva_extrabutton_text' => [substr( $name, 0, -1 )],
+				'qanva_extrabutton_self' => __( 'Open in same window', 'qanva-powertools-for-elementor' ),
+				'qanva_extrabutton_new' => __( 'Open in new window', 'qanva-powertools-for-elementor' ),
+				'qanva_extrabutton_clone' => esc_attr($clonetext),
+				]);
 		}
 		
 		public function extra_elementormenu_buttons_admin_css(){
 			wp_enqueue_style('qanva_pt_style',plugins_url( 'css/qanvapower_back.css', __FILE__ ),true,MAKEPOWERSETTINGSVERSION,'all' );
 		}
 		
+		/** Values by AJAX for new post_name **/
 		function setnewpermaname() {
 				global $wpdb;
 					$data = [ 'post_name' => sanitize_text_field($_POST['newname']) ];
 					$where = [ 'id' => sanitize_text_field($_POST['postid']) ];
 					$wpdb->update($wpdb->prefix . 'posts',$data,$where );
+					return "X" . $_POST['newname'] . $_POST['postid'];
 					wp_die();
 		}
 }

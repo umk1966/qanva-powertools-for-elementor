@@ -210,10 +210,10 @@
 <hr>
 <?php _e( "Select a target or enter a individual link", "qanva-powertools-for-elementor" ); ?>:
 <br>
-        <select class="uk-form-small uk-width-1-1" name="pagetarget" form="qanvaebeform" autocomplete="off" >
-          <option value=''><?php _e( "Please choose a target", "qanva-powertools-for-elementor" );?></option>
-          <?php echo qanvaebe_get_links(); ?>
-        </select>
+			<select class="uk-form-small uk-width-1-1" name="pagetarget" form="qanvaebeform" autocomplete="off" >
+					<option value=''><?php _e( "Please choose a target", "qanva-powertools-for-elementor" );?></option>
+					<?php echo qanvaebe_get_links(); ?>
+			</select>
 		<p>
 		<input type="text" name="pagetargettext" form="qanvaebeform"  class="uk-input uk-form-small uk-width-1-1" placeholder="<?php _e( "Individual link", "qanva-powertools-for-elementor" ); ?>"  autocomplete="off"/>
 		</p>
@@ -230,25 +230,25 @@
 		<h5><?php _e( "Enable \"Quickchanger\" in Elementor", "qanva-powertools-for-elementor" ); ?></h5>
 		<div class="switchbox  uk-width-1-1">
 		<label for="switch-1" class="switch">
-          	<input type="checkbox" id="switch-1" name="active" class="uk-switch"  form="qanvaebeform" value="1" autocomplete="off">
+   <input type="checkbox" id="switch-1" name="active" class="uk-switch"  form="qanvaebeform" value="1" autocomplete="off">
 			<span class="slider round"></span>
-       	</label>
+  </label>
 		</div>
 		<span class="small red"><?php _e( " Notice", "qanva-powertools-for-elementor" ); ?>:</span><br><span class="small"><?php _e( " \"Quickchanger\" is a dropdown link-list to post, pages, landing-pages and templates.", "qanva-powertools-for-elementor" ); ?></span>
 		<hr>
 		<h5><?php _e( "Enable cloning of pages,posts and templates in Elementor", "qanva-powertools-for-elementor" ); ?></h5>
 		<div class="switchbox  uk-width-1-1">
 		<label for="switch-2" class="switch">
-    <input type="checkbox" id="switch-2" name="cloneactive" class="uk-switch"  form="qanvaebeform" value="1" autocomplete="off" <?=$clonesel?>>
+  	<input type="checkbox" id="switch-2" name="cloneactive" class="uk-switch"  form="qanvaebeform" value="1" autocomplete="off" <?php echo esc_attr($clonesel);?>>
 			<span class="slider round"></span>
-       	</label>
+  </label>
 		</div>
 		<h5><?php _e( "Open cloned page/post/template directly", "qanva-powertools-for-elementor" ); ?></h5>
 		<div class="switchbox  uk-width-1-1">
 		<label for="switch-3" class="switch">
-    <input type="checkbox" id="switch-3" name="cloneopen" class="uk-switch"  form="qanvaebeform" value="1" autocomplete="off" <?=$cloneop?>>
+   <input type="checkbox" id="switch-3" name="cloneopen" class="uk-switch"  form="qanvaebeform" value="1" autocomplete="off" <?php echo esc_attr($cloneop);?>>
 			<span class="slider round"></span>
-       	</label>
+   </label>
 		</div>
 <hr>
 		<p>
@@ -266,7 +266,7 @@
 					<?php 
 						if ( !empty( $savevalues ) ) {
 							foreach( $savevalues AS $key => $val ){
-								echo '<button type="submit" name="deleter" value="' . $key . '" form="qanvaebeformb" class="uk-button uk-button-danger uk-form-small uk-width-1-3 uk-margin-small-top" >' . __( 'Delete' ) . ' &rarr; ' . $val[ 2 ] . '</button><br>';
+								echo '<button type="submit" name="deleter" value="' . esc_attr($key) . '" form="qanvaebeformb" class="uk-button uk-button-danger uk-form-small uk-width-1-3 uk-margin-small-top" >' . __( 'Delete' ) . ' &rarr; ' . esc_attr($val[ 2 ]) . '</button><br>';
 							}
 							
 						}
