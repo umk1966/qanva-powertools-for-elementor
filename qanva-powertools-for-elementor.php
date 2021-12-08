@@ -485,7 +485,7 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 					$data = [ 'post_name' => sanitize_text_field($_POST['newname']) ];
 					$where = [ 'id' => sanitize_text_field($_POST['postid']) ];
 					$wpdb->update($wpdb->prefix . 'posts',$data,$where );
-					return "X" . $_POST['newname'] . $_POST['postid'];
+					#return "";
 					wp_die();
 		}
 }
