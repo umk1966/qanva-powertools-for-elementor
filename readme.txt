@@ -4,8 +4,8 @@ Tags: Elementor, user expirience, tools, cloning, improved workflow
 Requires at least: 4.0.0
 Requires PHP: 7
 Tested up to: 5.8.2
-Stable tag: 1.0.0
-Version: 1.0.0
+Stable tag: 1.0.1
+Version: 1.0.1
 Plugin URL: https://qanva.tech/qanva-powertools-for-elementor
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -33,6 +33,9 @@ Add special settings, cloning of pages,posts/templates in Elementor. Align 3 or 
 
 = 1.0.0 =
 Release version
+
+= 1.0.1 =
+Bugfix regarding Quickchanger
 
 
 * Add special settings, cloning of pages,posts/templates in Elementor

@@ -3,9 +3,11 @@
  * Plugin Name: Qanva Powertools for Elementor
  * Description: Add special settings, cloning of pages,posts/templates in Elementor
  * Plugin URI:  https://qanva.tech/qanva-powertools-for-elementor
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      ukischkel, fab22
  * Author URI:  https://qanva.tech
+ * License:		GPL v2
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: qanva-powertools-for-elementor
  * Domain Path: languages
  */
@@ -15,7 +17,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit;
 }
 	
-	define( 'MAKEPOWERSETTINGSVERSION', '1.0.0' );
+	define( 'MAKEPOWERSETTINGSVERSION', '1.0.1' );
 	    
 	if ( !get_option( 'qanva_buttons_for_elementor_select' ) ) {
 					add_option( 'qanva_buttons_for_elementor_select', '0' );
@@ -454,9 +456,9 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 			$name ='';
 			if(!empty($buttonwerte)){
 				foreach ( $buttonwerte as $key => $val ) {
-					$linkurl .= '"' . $val[0] . '",';
-					$target .= '"' . $val[1] . '",';
-					$name .= '"' . $val[2] . '",';
+					$linkurl .= $val[0] . ',';
+					$target .= $val[1] . ',';
+					$name .= $val[2] . ',';
 				}
 			}
 
