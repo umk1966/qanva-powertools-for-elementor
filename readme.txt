@@ -1,14 +1,21 @@
 === Qanva Powertools for Elementor ===
-Contributors: ukischkel, fab22
+Contributors: ukischkel, fab22, qanva.tech
 Tags: Elementor, user expirience, tools, cloning, improved workflow
 Requires at least: 4.0.0
 Requires PHP: 7
 Tested up to: 5.8.2
+<<<<<<< Updated upstream
 Stable tag: 1.0.0
 Version: 1.0.0
+=======
+Stable tag: 2.0.0
+Version: 2.0.0
+>>>>>>> Stashed changes
 Plugin URL: https://qanva.tech/qanva-powertools-for-elementor
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Elementor tested up to: 3.5.3
+Elementor Pro tested up to: 3.5.2
 
 Poweruser settings for Elementor to improve your workflow
 
@@ -34,5 +41,17 @@ Add special settings, cloning of pages,posts/templates in Elementor. Align 3 or 
 = 1.0.0 =
 Release version
 
+<<<<<<< Updated upstream
+=======
+= 1.0.1 =
+Bugfix regarding Quickchanger
+
+= 1.0.2 =
+Fixed CSS files
+
+= 2.0.0 =
+Store your favorites
+
+>>>>>>> Stashed changes
 
 * Add special settings, cloning of pages,posts/templates in Elementor

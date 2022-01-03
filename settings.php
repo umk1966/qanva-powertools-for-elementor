@@ -201,7 +201,7 @@
 <form id="qanvaebeformb" method="post" action="">
 <?php wp_nonce_field( 'qanvasubmitb', 'qanvaprooftwo' ); ?>
 </form>
-<div class="qanva uk-container-center uk-margin-top uk-margin-large-bottom">
+<div class="qanva qanvasetting uk-container-center uk-margin-top uk-margin-large-bottom">
 <h1><img src="<?php echo plugin_dir_url( __FILE__ ); ?>img/qanvalogo.svg" class="logo">Qanva <?php _e( "Extra Menu-Buttons, page cloning and special settings for Elementor", "qanva-powertools-for-elementor" ); ?>*</h1>
         <div class="uk-grid uk-margin-remove-left uk-margin-right" data-uk-grid-margin>
             <div class="uk-width-1-3 uk-card uk-card-default uk-card-body">

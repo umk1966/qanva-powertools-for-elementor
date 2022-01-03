@@ -47,5 +47,35 @@ border-radius: 0;
 letter-spacing: 1px;
 cursor: pointer;
 padding:5px;
-border:0
+border:0;
+width:30%
+}
+#qanvasavefav{
+background: #0085ba;
+color: white;
+font-weight: bold;
+border-radius: 0;
+letter-spacing: 1px;
+cursor: pointer;
+padding:5px;
+border:0;
+margin-top: 10px;
+width: 100%;
+}
+.elementor-panel .elementor-panel-category-items .elementor-element-wrapper.qanva-pte-hide{
+	display:none;
+}
+.elementor-panel #elementor-panel-category-favorites .elementor-panel-category-items .elementor-element-wrapper.qanva-pte-hide{
+	display:block;
+}
+#qptistsaved{
+	display:none;
+	padding:6px 5px;
+	background:white;
+	color:red;
+	border: 1px solid black;
+position: absolute;
+right: 20px;
+min-width: 83px;
+text-align: center;
 }
