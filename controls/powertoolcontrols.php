@@ -10,12 +10,12 @@ class Qanvapowerusertoolscontrols{
 
 	public static function start(){
 		add_action( 'elementor/element/wp-page/document_settings/after_section_end', [ __CLASS__,'qanvapowertoolcontrols'], 1 );
-	#	add_action( 'elementor/element/wp-post/document_settings/before_section_end', [ __CLASS__,'qanvapowertoolcontrols'], 10,2 );
+		add_action( 'elementor/element/wp-post/document_settings/before_section_end', [ __CLASS__,'qanvapowertoolcontrols'], 10,2 );
 	}
 	
 	public static function qanvapowertoolcontrols( \Elementor\Core\DocumentTypes\PageBase $page ){
 #	public function qanvapowertoolcontrols( Element_Base $page ){
-			global $post;
+			global $post, $current_user;
 			
 			$page->start_controls_section(
 			'qanva_poweruser',
@@ -129,18 +129,18 @@ class Qanvapowerusertoolscontrols{
 				$page->add_control(
 					'qanva_qpt_email',
 					[
-						'label' => '',
+						'label' => __( 'Your Email', 'qanva-powertools-for-elementor' ),
 						'type' => \Elementor\Controls_Manager::RAW_HTML,
-						'raw' => '<input type="email" value="" name="qanvaptmail" id="qanvaptmail" placeholder="' . __( 'Your email', 'qanva-powertools-for-elementor' ) . '">',
+						'raw' => '<input type="email" value="' .  $current_user->user_email . '" name="qanvausermail" id="qanvausermail" placeholder="' . __( 'Your email', 'qanva-powertools-for-elementor' ) . '">',
 					]
 				);
 
 				$page->add_control(
 					'qanva_qpt_pw',
 					[
-						'label' => '',
+						'label' => __( 'Letters and Numbers only, min 8 characters', 'qanva-powertools-for-elementor' ),
 						'type' => \Elementor\Controls_Manager::RAW_HTML,
-						'raw' => '<input type="text" pattern="[a-zA-Z0-9]{8}" value="" name="qanvaptpw" id="qanvaptpw" placeholder="' . __( 'Your password', 'qanva-powertools-for-elementor' ) . '"><br><button id="qanvasavefav">' . __( 'Save', 'qanva-powertools-for-elementor' ) . '</button>',
+						'raw' => '<input type="text" value="" name="qanvauserpw" id="qanvauserpw" placeholder="' . __( 'Your password', 'qanva-powertools-for-elementor' ) . '" ><div id="qanvapwinfo">' . __( 'Please use a password', 'qanva-powertools-for-elementor' ) . '!</div><br><button id="qanvagetfavorites">' . __( 'Get Favorites', 'qanva-powertools-for-elementor' ) . '</button><button id="qanvasavefav">' . __( 'Save', 'qanva-powertools-for-elementor' ) . '</button>',
 					]
 				);				
 				$page->end_controls_section();

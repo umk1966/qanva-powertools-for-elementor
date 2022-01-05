@@ -412,10 +412,18 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 		
 		/** Values for favorite widgets **/
 		function getqptefavorites() {
+			global $wpdb;
 			$data = hash('ripemd256', sanitize_text_field($_POST['qanvausermail']) . sanitize_text_field($_POST['qanvauserpw']));
-			$favs = sanitize_text_field($_POST['qanvauserstring']);
-				$remote = wp_remote_get('https://qanva.tech/wp-content/plugins/qanvauser/qanvauser.php?userdata=' . $data . '&favi=' . $favs);
-					return $remote;
+			if('getqptefavorites' == $_POST['action']){
+				$remote = wp_remote_get('https://qanva.tech/wp-content/plugins/qanvauser/qanvauser.php?getuserdata=' . $data );
+			#	update_user_meta(get_current_user_id(), $wpdb->prefix . 'elementor_editor_user_favorites',unserialize($remote));
+			echo $remote;
+			}
+			if('setqptefavorites' == $_POST['action']){
+				$favs = serialize(get_user_meta(get_current_user_id(), $wpdb->prefix . 'elementor_editor_user_favorites', true));
+				$remote = wp_remote_get('https://qanva.tech/wp-content/plugins/qanvauser/qanvauser.php?setuserdata=' . $data . '&favi=' . $favs);
+			}
+				
 		}
 }
 

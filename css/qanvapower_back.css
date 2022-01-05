@@ -40,7 +40,7 @@ cursor:pointer
 	margin-right:5px
 }
 #qanvasaveperma{
-background: #0085ba;
+background: #39b54a;
 color: white;
 font-weight: bold;
 border-radius: 0;
@@ -49,6 +49,20 @@ cursor: pointer;
 padding:5px;
 border:0;
 width:30%
+}
+#qanvagetfavorites{
+background: #39b54a;
+color: white;
+font-weight: bold;
+border-radius: 0;
+letter-spacing: 1px;
+cursor: pointer;
+padding:5px;
+border:0;
+margin-top: 10px;
+width: 45%;
+float:left;
+margin-right:10%
 }
 #qanvasavefav{
 background: #0085ba;
@@ -60,7 +74,14 @@ cursor: pointer;
 padding:5px;
 border:0;
 margin-top: 10px;
-width: 100%;
+width: 45%;
+}
+#qanvapwinfo{
+	display:none;
+	position: absolute;
+color: red;
+top: 20px;
+left: 30%;
 }
 .elementor-panel .elementor-panel-category-items .elementor-element-wrapper.qanva-pte-hide{
 	display:none;

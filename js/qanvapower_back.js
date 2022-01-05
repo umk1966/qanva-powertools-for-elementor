@@ -105,8 +105,6 @@
 				if(document.querySelector('#qanva_pt_width_style') == null){
 						ptwidthchange(selme,notext);
 				}
-				/* check favorites */
-			//	savefavorites();
 		},1000);
 
 		setInterval(function(){
@@ -221,34 +219,40 @@ jQuery( document ).ready( function( $ ) {
 					});
 			});
 			
-			/* check Favorites and save */
-			function savefavorites(){
-				if($('#elementor-panel-category-favorites').length > 0){
-					var favitems = $('#elementor-panel-category-favorites').find('.elementor-element-wrapper');
-					var favstring = '';
-					favitems.each(function(){
-						favstring += $(this).find('.title').text() + '#' + $(this).find('i').attr('class') + '*';
-					});
-					/* zwischenspeichern */
-					if(favstring != localStorage.getItem('qanva_powertools_favs')){
-						localStorage.setItem('qanva_powertools_favs',favstring);
-						var datacheck = {
-							'action' : 'getqptefavorites',
-							'qanvauserstring' : favstring,
-						};
-						jQuery.post(ajaxurl, datacheck, function(response) {
-							//response;
-						});console.log( favstring );
-					}
-				}
-			}
-			
-			/* get saved favorites */
+			/* check pasoword */
+			var thePW = '';
+			$(document).on('click mouseup keyup','#qanvauserpw',function(){
+				thePW = $(this).val();
+				thePW =	thePW.replace(/[^a-zA-Z0-9]+/g, "");
+				$('#qanvauserpw').val(thePW);
+			});
+
+			/* get Favorites  */			
+			$(document).on('click','#qanvasavefav',function(){
+						if(thePW.length >= 8){
+							var datacheck = {
+								'action' : 'getqptefavorites',
+								'qanvausermail' : $(document).find('#qanvausermail').val(),
+								'qanvauserpw' : thePW,
+							};
+							jQuery.post(ajaxurl, datacheck, function(response) {
+								alert(response);
+							});
+						}
+						else{
+							$('#qanvapwinfo').fadeTo("slow", 1, function(){
+								$("#qanvapwinfo").fadeTo(1500,0);
+							});
+						}
+			});
+				
+			/* save favorites */
 			$(document).on('click','#qanvagetfavorites',function(){
+				if(thePW.length >= 8){
 					var data = {
-						'action' : 'getqptefavorites',
+						'action' : 'setqptefavorites',
 						'qanvausermail' : $(document).find('#qanvausermail').val(),
-						'qanvauserpw' : $(document).find('#qanvauserpw').val(),
+						'qanvauserpw' : thePW,
 					};
 					jQuery.post(ajaxurl, data, function(response) {
 						var myfavorites = response;
@@ -260,6 +264,12 @@ jQuery( document ).ready( function( $ ) {
 						}
 					});
 				
+				}
+					else{
+						$('#qanvapwinfo').fadeTo("slow", 1, function(){
+							$("#qanvapwinfo").fadeTo(1500,0);
+						});
+					}
 			});
 
 });

@@ -7,7 +7,15 @@
 
 <div class="wrap">
 <?php
-
+global $wpdb;
+ echo "<pre>";
+ print_r( get_user_meta(get_current_user_id(), $wpdb->prefix . 'elementor_editor_user_favorites', true) );
+ echo serialize( get_user_meta(get_current_user_id(), $wpdb->prefix . 'elementor_editor_user_favorites', true) );
+echo "<br>" . json_encode( get_user_meta(get_current_user_id(), $wpdb->prefix . 'elementor_editor_user_favorites', true) );
+echo "<br>" . (stripslashes($_GET['x']));
+print_r(get_option('test'));
+echo "</pre>";
+# update_option('test',unserialize(stripslashes($_GET['x'])));
 	/** sanitize alle $_POST variables **/
 	$cleanedpost = [];
 	if ( isset( $_POST ) ) {
@@ -191,7 +199,6 @@
 		<?php				
 			}
 		?>
-		setInterval(function(){$('[class*="notice"],[class*="error"]').remove();},200);
 	});
 	</script>
 
