@@ -10,7 +10,7 @@ class Qanvapowerusertoolscontrols{
 
 	public static function start(){
 		add_action( 'elementor/element/wp-page/document_settings/after_section_end', [ __CLASS__,'qanvapowertoolcontrols'], 1 );
-		add_action( 'elementor/element/wp-post/document_settings/before_section_end', [ __CLASS__,'qanvapowertoolcontrols'], 10,2 );
+		add_action( 'elementor/element/wp-post/document_settings/after_section_end', [ __CLASS__,'qanvapowertoolcontrols'], 10,2 );
 	}
 	
 	public static function qanvapowertoolcontrols( \Elementor\Core\DocumentTypes\PageBase $page ){
@@ -18,12 +18,12 @@ class Qanvapowerusertoolscontrols{
 			global $post, $current_user;
 			
 			$page->start_controls_section(
-			'qanva_poweruser',
-			[
-				'label' => 'Poweruser tools',
-				'tab' => Controls_Manager::TAB_SETTINGS,
-			]
-		);
+				'qanva_poweruser',
+				[
+					'label' => 'Poweruser tools',
+					'tab' => Controls_Manager::TAB_SETTINGS,
+				]
+			);
 
 				$page->add_control(
 					'qanva_pt_use',
@@ -118,7 +118,7 @@ class Qanvapowerusertoolscontrols{
 				);
 
 				$page->add_control(
-					'control_qpt_fav',
+					'qanva_qpt_fav',
 					[
 						'label' => __( 'Save your favorites', 'qanva-powertools-for-elementor' ),
 						'type' => \Elementor\Controls_Manager::HEADING,

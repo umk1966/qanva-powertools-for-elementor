@@ -8,14 +8,7 @@
 <div class="wrap">
 <?php
 global $wpdb;
- echo "<pre>";
- print_r( get_user_meta(get_current_user_id(), $wpdb->prefix . 'elementor_editor_user_favorites', true) );
- echo serialize( get_user_meta(get_current_user_id(), $wpdb->prefix . 'elementor_editor_user_favorites', true) );
-echo "<br>" . json_encode( get_user_meta(get_current_user_id(), $wpdb->prefix . 'elementor_editor_user_favorites', true) );
-echo "<br>" . (stripslashes($_GET['x']));
-print_r(get_option('test'));
-echo "</pre>";
-# update_option('test',unserialize(stripslashes($_GET['x'])));
+
 	/** sanitize alle $_POST variables **/
 	$cleanedpost = [];
 	if ( isset( $_POST ) ) {
@@ -151,6 +144,10 @@ echo "</pre>";
 		return $reval;
 	}
 
+			/* reset favorites */
+   if ( isset( $cleanedpost[ 'qanvafavreset' ]  ) && wp_verify_nonce( $_POST[ 'qanvaproofthree' ], 'qanvafavreset' ) ) {
+				update_user_meta(get_current_user_id(), $wpdb->prefix . 'elementor_editor_user_favorites','');
+			}
 ?>
 
 	<script type="text/javascript">
@@ -208,6 +205,9 @@ echo "</pre>";
 <form id="qanvaebeformb" method="post" action="">
 <?php wp_nonce_field( 'qanvasubmitb', 'qanvaprooftwo' ); ?>
 </form>
+<form id="qanvaeceform" method="post" action="">
+<?php wp_nonce_field( 'qanvafavreset', 'qanvaproofthree' ); ?>
+</form>
 <div class="qanva qanvasetting uk-container-center uk-margin-top uk-margin-large-bottom">
 <h1><img src="<?php echo plugin_dir_url( __FILE__ ); ?>img/qanvalogo.svg" class="logo">Qanva <?php _e( "Extra Menu-Buttons, page cloning and special settings for Elementor", "qanva-powertools-for-elementor" ); ?>*</h1>
         <div class="uk-grid uk-margin-remove-left uk-margin-right" data-uk-grid-margin>
@@ -261,6 +261,13 @@ echo "</pre>";
 		<p>
 		<button type="submit" name="qanvasubmit" form="qanvaebeform"  class="uk-button uk-button-primary uk-form-small uk-width-1-1" ><?php _e( "Save", "qanva-powertools-for-elementor" ); ?></button>
 		</p>
+		<?php if(!empty(get_user_meta(get_current_user_id(), $wpdb->prefix . 'elementor_editor_user_favorites')[0])){ ?>
+<hr>
+	<h5><?php _e( "In case loaded favorites let Elementor crash, you can delete them here", "qanva-powertools-for-elementor" ); ?>.</h5>
+		<p>
+		<button type="submit" name="qanvafavreset" form="qanvaeceform"  class="uk-button uk-button-danger uk-form-small uk-width-1-1" ><?php _e( "Reset Favorite Widgets", "qanva-powertools-for-elementor" ); ?></button>
+		</p>
+		<?php } ?>
 * Elementor is the trademark of elementor.com  This project is <strong class="red">NOT</strong> affiliated with Elementor!
 <style>
 

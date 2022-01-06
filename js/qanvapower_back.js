@@ -51,12 +51,16 @@
 						el[i].addEventListener("mouseout", function(){var qtt = document.getElementById('pttt');qtt.style.display = 'none'; qtt.textContent = '';}, false);
 						el[i].classList.add('qanvapte');
 					}
-
-					}
+				}
+						
+						
 			}
 		}
 		/* get mouse position */
 		document.onmousemove = updateTT;
+		
+		/* kill tooltipp */
+		setInterval(function(){if(document.getElementsByClassName("elementor-element-wrapper").length == 0 && document.getElementById('pttt')){document.getElementById('pttt').style.display = 'none'; document.getElementById('pttt').textContent = '';}},200);
 			
 		function updateTT(e) {
 			var tt = document.getElementById('pttt');
@@ -133,6 +137,13 @@
 				if(localStorage.getItem("qanva_powertools_nowp") == "no" && document.querySelector('#elementor-panel-category-wordpress') !== null){
 						document.querySelector('#elementor-panel-category-wordpress').remove();
 				}
+				/* check if favorites aktiv */
+				if(localStorage.getItem("qanva_favorites") != 1 && document.querySelector('#elementor-panel-category-favorites') !== null && document.querySelector('#elementor-panel-category-basic') !== null){
+					localStorage.setItem('qanva_favorites',1);
+				}
+				if(document.querySelector('#elementor-panel-category-favorites') === null && document.querySelector('#elementor-panel-category-basic') !== null){
+					localStorage.removeItem('qanva_favorites');
+				}
 		}, 500);
 
 jQuery( document ).ready( function( $ ) {		
@@ -192,6 +203,18 @@ jQuery( document ).ready( function( $ ) {
 			proofdash = proofdash.toLowerCase().replace(/[^a-zA-Z0-9-]+/g, "");
 			$('#qanvanewpname').val(proofdash);
 		}
+				/* remove favorite get and set */
+				if(localStorage.getItem("qanva_favorites") != 1){
+					if(document.querySelector('.elementor-control-qanva_qpt_fav') !== null){
+						document.querySelector('.elementor-control-qanva_qpt_fav').remove();
+					}
+					if(document.querySelector('.elementor-control-qanva_qpt_email') !== null){
+						document.querySelector('.elementor-control-qanva_qpt_email').remove();
+					}
+					if(document.querySelector('.elementor-control-qanva_qpt_pw') !== null){
+						document.querySelector('.elementor-control-qanva_qpt_pw').remove();
+					}
+				}
 	},100);
 	
 			$(document).on('click','#qanvasaveperma',function(){
@@ -212,14 +235,14 @@ jQuery( document ).ready( function( $ ) {
 								$('#qptistsaved').text(response);
 								$('#qptistsaved').fadeIn(500,function(){
 									$('#qptistsaved').fadeOut(800, function(){
-								$('#qptistsaved').text('');
+										$('#qptistsaved').text('');
 									});
 								});
 						}
 					});
 			});
 			
-			/* check pasoword */
+			/* check password */
 			var thePW = '';
 			$(document).on('click mouseup keyup','#qanvauserpw',function(){
 				thePW = $(this).val();
@@ -228,15 +251,18 @@ jQuery( document ).ready( function( $ ) {
 			});
 
 			/* get Favorites  */			
-			$(document).on('click','#qanvasavefav',function(){
+			$(document).on('click','#qanvagetfavorites',function(){
 						if(thePW.length >= 8){
 							var datacheck = {
 								'action' : 'getqptefavorites',
+								'todo' : 'getfavorites',
 								'qanvausermail' : $(document).find('#qanvausermail').val(),
 								'qanvauserpw' : thePW,
 							};
-							jQuery.post(ajaxurl, datacheck, function(response) {
-								alert(response);
+							jQuery.post(ajaxurl, datacheck, function(response){
+								if(0 != response){
+									location.reload();
+								}
 							});
 						}
 						else{
@@ -247,20 +273,23 @@ jQuery( document ).ready( function( $ ) {
 			});
 				
 			/* save favorites */
-			$(document).on('click','#qanvagetfavorites',function(){
+			$(document).on('click','#qanvasavefav',function(){
 				if(thePW.length >= 8){
 					var data = {
-						'action' : 'setqptefavorites',
+						'action' : 'getqptefavorites',
+						'todo' : 'setfavorites',
 						'qanvausermail' : $(document).find('#qanvausermail').val(),
 						'qanvauserpw' : thePW,
 					};
-					jQuery.post(ajaxurl, data, function(response) {
-						var myfavorites = response;
-					});
-					$('.elementor-element-wrapper').each(function(){
-						if(this.querySelector('.title').textContent == 'Bild' && $(this).find('i').hasClass('eicon-image') === true ){
-							$(this).addClass('qanva-pte-hide');
-							$('.elementor-panel-category-items').append($(this));
+					jQuery.post(ajaxurl, data, function(response){
+						//alert(response);
+						if('' != response){
+							$('#qanvasavefav').css({'background':'white','color':'#39b54a','border':'1px solid black'});
+							$('#qanvasavefav').text(qanvapowertoolsvals.qanva_done);
+							setTimeout(function(){
+											$('#qanvasavefav').css({'background':'#0085ba','color':'white','border':'none'});
+											$('#qanvasavefav').text(qanvapowertoolsvals.qanva_save_perma);								
+							},1000);
 						}
 					});
 				

@@ -13,7 +13,7 @@
  * Elementor tested up to: 3.5.3
  * Elementor Pro tested up to: 3.5.2
  */
-#namespace MAKEPOWERSETTINGS;
+
   
 if ( !defined( 'ABSPATH' ) ) {
     exit;
@@ -158,6 +158,8 @@ final class MAKEPOWERSETTINGSELEMENTOR{
     /** read all posts, pages, landing-pages and create option-list **/
 				public function eebaoptionmaker(){
 					global  $wpdb;
+					$linkval = '';
+					$linkvalb = '';
 						$allposts = get_posts();
 						$allpages = get_pages( [
 										'post_type'   => 'page',
@@ -393,6 +395,7 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 				'qanva_extrabutton_new' => __( 'Open in new window', 'qanva-powertools-for-elementor' ),
 				'qanva_extrabutton_clone' => esc_attr($clonetext),
 				'qanva_save_perma' => __( 'Save', 'qanva-powertools-for-elementor' ),
+				'qanva_done' => __( 'Done', 'qanva-powertools-for-elementor' ),
 				]);
 		}
 		
@@ -414,14 +417,18 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 		function getqptefavorites() {
 			global $wpdb;
 			$data = hash('ripemd256', sanitize_text_field($_POST['qanvausermail']) . sanitize_text_field($_POST['qanvauserpw']));
-			if('getqptefavorites' == $_POST['action']){
+			if('getfavorites' == $_POST['todo']){
 				$remote = wp_remote_get('https://qanva.tech/wp-content/plugins/qanvauser/qanvauser.php?getuserdata=' . $data );
-			#	update_user_meta(get_current_user_id(), $wpdb->prefix . 'elementor_editor_user_favorites',unserialize($remote));
-			echo $remote;
+			#	$remote = wp_remote_get('http://localhost/develop/wp-content/plugins/qanvauser/qanvauser.php?getuserdata=' . $data );
+				if(update_user_meta(get_current_user_id(), $wpdb->prefix . 'elementor_editor_user_favorites',unserialize($remote['body']))){
+					echo "OK";
+				}
 			}
-			if('setqptefavorites' == $_POST['action']){
+			if('setfavorites' == $_POST['todo']){
 				$favs = serialize(get_user_meta(get_current_user_id(), $wpdb->prefix . 'elementor_editor_user_favorites', true));
 				$remote = wp_remote_get('https://qanva.tech/wp-content/plugins/qanvauser/qanvauser.php?setuserdata=' . $data . '&favi=' . $favs);
+		#	$remote = wp_remote_get('http://localhost/develop/wp-content/plugins/qanvauser/qanvauser.php?setuserdata=' . $data  . '&favi=' . $favs);
+				echo "OK";
 			}
 				
 		}
