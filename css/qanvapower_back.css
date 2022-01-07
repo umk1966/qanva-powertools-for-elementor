@@ -40,6 +40,31 @@ cursor:pointer
 	margin-right:5px
 }
 #qanvasaveperma{
+background: #39b54a;
+color: white;
+font-weight: bold;
+border-radius: 0;
+letter-spacing: 1px;
+cursor: pointer;
+padding:5px;
+border:0;
+width:30%
+}
+#qanvagetfavorites{
+background: #39b54a;
+color: white;
+font-weight: bold;
+border-radius: 0;
+letter-spacing: 1px;
+cursor: pointer;
+padding:5px;
+border:0;
+margin-top: 10px;
+width: 45%;
+float:left;
+margin-right:10%
+}
+#qanvasavefav{
 background: #0085ba;
 color: white;
 font-weight: bold;
@@ -47,5 +72,31 @@ border-radius: 0;
 letter-spacing: 1px;
 cursor: pointer;
 padding:5px;
-border:0
+border:0;
+margin-top: 10px;
+width: 45%;
+}
+#qanvapwinfo{
+	display:none;
+	position: absolute;
+color: red;
+top: 20px;
+left: 30%;
+}
+.elementor-panel .elementor-panel-category-items .elementor-element-wrapper.qanva-pte-hide{
+	display:none;
+}
+.elementor-panel #elementor-panel-category-favorites .elementor-panel-category-items .elementor-element-wrapper.qanva-pte-hide{
+	display:block;
+}
+#qptistsaved{
+	display:none;
+	padding:6px 5px;
+	background:white;
+	color:red;
+	border: 1px solid black;
+position: absolute;
+right: 20px;
+min-width: 83px;
+text-align: center;
 }

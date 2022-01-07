@@ -17,21 +17,21 @@
 			}
 			
 
-						var newEl = document.createElement("style"); 
-						newEl.setAttribute("id", "qanva_pt_width_style");
-										switch(newval){
-											case "2" : var textnode = document.createTextNode(".elementor-panel .elementor-responsive-panel{grid-template-columns: repeat(auto-fill, minmax(Min(135px, calc( 50% - 5px)), 1fr))}" + notextadd);
-														break;
-											case "3" : var textnode = document.createTextNode(".elementor-panel .elementor-responsive-panel{grid-template-columns: repeat(auto-fill, minmax(Min(135px, calc( 30% - 5px)), 1fr)) !important}" + notextadd);
-														break;
-											case "4" : var textnode = document.createTextNode(".elementor-panel .elementor-responsive-panel{grid-template-columns: repeat(auto-fill, minmax(Min(135px, calc( 20% - 5px)), 1fr)) !important}" + notextadd);
-														break;
-										}
-										newEl.append(textnode);
-														if(document.querySelector('#elementor-panel-inner') != null ){  
-															document.getElementById("elementor-panel-inner").appendChild(newEl);
-														}
-																localStorage.setItem("qanva_powertools_grid",newval);
+				var newEl = document.createElement("style"); 
+				newEl.setAttribute("id", "qanva_pt_width_style");
+					switch(newval){
+						case "2" : var textnode = document.createTextNode(".elementor-panel .elementor-responsive-panel{grid-template-columns: repeat(auto-fill, minmax(Min(135px, calc( 50% - 5px)), 1fr))}" + notextadd);
+									break;
+						case "3" : var textnode = document.createTextNode(".elementor-panel .elementor-responsive-panel{grid-template-columns: repeat(auto-fill, minmax(Min(135px, calc( 30% - 5px)), 1fr)) !important}" + notextadd);
+									break;
+						case "4" : var textnode = document.createTextNode(".elementor-panel .elementor-responsive-panel{grid-template-columns: repeat(auto-fill, minmax(Min(135px, calc( 20% - 5px)), 1fr)) !important}" + notextadd);
+									break;
+					}
+						newEl.append(textnode);
+							if(document.querySelector('#elementor-panel-inner') != null ){  
+								document.getElementById("elementor-panel-inner").appendChild(newEl);
+							}
+								localStorage.setItem("qanva_powertools_grid",newval);
 		}
 		
 		function maketooltipp(ny){
@@ -48,11 +48,16 @@
 				for(var i = 0; i < el.length; i++){
 					el[i].addEventListener("mouseover", function(){var qtt = document.getElementById('pttt');qtt.style.display = 'block'; qtt.textContent = this.querySelector('.title').textContent;}, false);
 					el[i].addEventListener("mouseout", function(){var qtt = document.getElementById('pttt');qtt.style.display = 'none'; qtt.textContent = '';}, false);
-					}
+				}
+						
+						
 			}
 		}
 		/* get mouse position */
 		document.onmousemove = updateTT;
+		
+		/* kill tooltipp */
+		setInterval(function(){if(document.getElementsByClassName("elementor-element-wrapper").length == 0 && document.getElementById('pttt')){document.getElementById('pttt').style.display = 'none'; document.getElementById('pttt').textContent = '';}},200);
 			
 		function updateTT(e) {
 			var tt = document.getElementById('pttt');
@@ -104,31 +109,38 @@
 		},1000);
 
 		setInterval(function(){
-				if(document.querySelector('[data-setting="qanva_pt_use"]')){
-					/* check width change */
-					if(document.querySelector('[data-setting="qanva_pt_use"]').checked === true){
-						notext = 'yes';
-						ptwidthchange(localStorage.getItem("qanva_powertools_grid"),notext);
-					}
-					/* check no-text on/off */
-					if(document.querySelector('[data-setting="qanva_pt_use"]').checked === false){
-						localStorage.setItem("qanva_powertools_text",'no');
-						notext = 'no';
-						ptwidthchange(localStorage.getItem("qanva_powertools_grid"),notext);
-					}
+			if(document.querySelector('[data-setting="qanva_pt_use"]')){
+				/* check width change */
+				if(document.querySelector('[data-setting="qanva_pt_use"]').checked === true){
+					notext = 'yes';
+					ptwidthchange(localStorage.getItem("qanva_powertools_grid"),notext);
 				}
-					/* check WP widget on/off */
-					if(document.querySelector('[data-setting="qanva_pt_rem_wp"]') !== null){
-									if(document.querySelector('[data-setting="qanva_pt_rem_wp"]').checked === true){
-										localStorage.setItem("qanva_powertools_nowp",'no');
-									}
-									if(document.querySelector('[data-setting="qanva_pt_rem_wp"]').checked === false){
-										localStorage.removeItem("qanva_powertools_nowp");
-									}
-					}
-					if(localStorage.getItem("qanva_powertools_nowp") == "no" && document.querySelector('#elementor-panel-category-wordpress') !== null){
-							document.querySelector('#elementor-panel-category-wordpress').remove();
-					}
+				/* check no-text on/off */
+				if(document.querySelector('[data-setting="qanva_pt_use"]').checked === false){
+					localStorage.setItem("qanva_powertools_text",'no');
+					notext = 'no';
+					ptwidthchange(localStorage.getItem("qanva_powertools_grid"),notext);
+				}
+			}
+				/* check WP widget on/off */
+				if(document.querySelector('[data-setting="qanva_pt_rem_wp"]') !== null){
+								if(document.querySelector('[data-setting="qanva_pt_rem_wp"]').checked === true){
+									localStorage.setItem("qanva_powertools_nowp",'no');
+								}
+								if(document.querySelector('[data-setting="qanva_pt_rem_wp"]').checked === false){
+									localStorage.removeItem("qanva_powertools_nowp");
+								}
+				}
+				if(localStorage.getItem("qanva_powertools_nowp") == "no" && document.querySelector('#elementor-panel-category-wordpress') !== null){
+						document.querySelector('#elementor-panel-category-wordpress').remove();
+				}
+				/* check if favorites aktiv */
+				if(localStorage.getItem("qanva_favorites") != 1 && document.querySelector('#elementor-panel-category-favorites') !== null && document.querySelector('#elementor-panel-category-basic') !== null){
+					localStorage.setItem('qanva_favorites',1);
+				}
+				if(document.querySelector('#elementor-panel-category-favorites') === null && document.querySelector('#elementor-panel-category-basic') !== null){
+					localStorage.removeItem('qanva_favorites');
+				}
 		}, 500);
 
 jQuery( document ).ready( function( $ ) {		
@@ -179,7 +191,8 @@ jQuery( document ).ready( function( $ ) {
 	}
 	var addbuttonstoelementormenucheck = setInterval( addbuttonstoelementormenu, 200 );
 	
-	setInterval(function(){
+	/* check and fix permalink */
+	function permacheckfunc(){
 		if(1 == $('#qanvanewpname').length){
 			var proofdash = $('#qanvanewpname').val();
 			if('-' == proofdash.substring(0,1)){
@@ -188,24 +201,168 @@ jQuery( document ).ready( function( $ ) {
 			proofdash = proofdash.toLowerCase().replace(/[^a-zA-Z0-9-]+/g, "");
 			$('#qanvanewpname').val(proofdash);
 		}
+	}
+
+	setInterval(function(){
+	 $('#qanvanewpname').on('focus',function(){
+			clearInterval(permacheck);
+  });	
+	 $('#qanvanewpname').on('focusout',function(){
+			permacheckfunc();
+		});
 	},100);
 	
-				$(document).on('click','#qanvasaveperma',function(){
-					var parts = window.location.href.split('?');
-					var insertstring = $(document).find('#qanvanewpname').val(); 
-						if('-' == insertstring.substring(insertstring.length - 1)){
-							var insertstring = insertstring.substring(0,insertstring.length - 1);
-							$('#qanvanewpname').val(insertstring);
+			/* remove favorite get and set */
+			var checkfavoritexist = setInterval(function(){
+				if(localStorage.getItem("qanva_favorites") != 1){
+					if(document.querySelector('.elementor-control-qanva_qpt_fav') !== null){
+						document.querySelector('.elementor-control-qanva_qpt_fav').remove();
+					}
+					if(document.querySelector('.elementor-control-qanva_qpt_email') !== null){
+						document.querySelector('.elementor-control-qanva_qpt_email').remove();
+					}
+					if(document.querySelector('.elementor-control-qanva_qpt_pw') !== null){
+						document.querySelector('.elementor-control-qanva_qpt_pw').remove();
+						clearInterval(checkfavoritexist);
+					}
+				}
+			},100);
+	
+			$(document).on('click','#qanvasaveperma',function(){
+				var parts = window.location.href.split('?');
+				var insertstring = $(document).find('#qanvanewpname').val();
+				if('' == insertstring){
+					return;
+				}
+					if('-' == insertstring.substring(insertstring.length - 1)){
+					 insertstring = insertstring.substring(0,insertstring.length - 1);
+						$('#qanvanewpname').val(insertstring);
+					}
+					var data = {
+						'action': 'setnewpermaname',
+						'newname': insertstring,
+						'postid': parts[1].replace( /\D/g, '')
+					};
+
+					jQuery.post(ajaxurl, data, function(response){
+						if('' != response){
+								$('#qptistsaved').text(response);
+								$('#qptistsaved').fadeIn(500,function(){
+									$('#qptistsaved').fadeOut(800, function(){
+										$('#qptistsaved').text('');
+									});
+								});
 						}
-						var data = {
-							'action': 'setnewpermaname',
-							'newname': insertstring,
-							'postid': parts[1].replace( /\D/g, '')
-						};
+					});
+			});
+			
+			/* check password */
+			var thePW = '';
+			$(document).on('click mouseup keyup','#qanvauserpw',function(){
+				thePW = $(this).val();
+				thePW =	thePW.replace(/[^a-zA-Z0-9]+/g, "");
+				$('#qanvauserpw').val(thePW);
+			});
 
-						jQuery.post(ajaxurl, data, function(response) {
-							// alert(response);
+			/* get Favorites  */			
+			$(document).on('click','#qanvagetfavorites',function(){
+						if(thePW.length >= 8){
+							var datacheck = {
+								'action' : 'getqptefavorites',
+								'todo' : 'getfavorites',
+								'qanvausermail' : $(document).find('#qanvausermail').val(),
+								'qanvauserpw' : thePW,
+							};
+							jQuery.post(ajaxurl, datacheck, function(response){
+								if(0 != response){
+									location.reload();
+								}
+							});
+						}
+						else{
+							$('#qanvapwinfo').fadeTo("slow", 1, function(){
+								$("#qanvapwinfo").fadeTo(1500,0);
+							});
+						}
+			});
+				
+			/* save favorites */
+			$(document).on('click','#qanvasavefav',function(){
+				if(thePW.length >= 8){
+					var data = {
+						'action' : 'getqptefavorites',
+						'todo' : 'setfavorites',
+						'qanvausermail' : $(document).find('#qanvausermail').val(),
+						'qanvauserpw' : thePW,
+					};
+					jQuery.post(ajaxurl, data, function(response){
+						//alert(response);
+						if('' != response){
+							$('#qanvasavefav').css({'background':'white','color':'#39b54a','border':'1px solid black'});
+							$('#qanvasavefav').text(qanvapowertoolsvals.qanva_done);
+							setTimeout(function(){
+								$('#qanvasavefav').css({'background':'#0085ba','color':'white','border':'none'});
+								$('#qanvasavefav').text(qanvapowertoolsvals.qanva_save_perma);								
+							},1000);
+						}
+					});
+				
+				}
+					else{
+						$('#qanvapwinfo').fadeTo("slow", 1, function(){
+							$("#qanvapwinfo").fadeTo(1500,0);
 						});
-				});
+					}
+			});
+			
+			/* remove double widgets on start */
+			const startdouble = setInterval(removedoublew,1000);
+			
+			/* remove double widgets switching back */
+			$(document).on('click','#elementor-panel-header-add-button',function(){
+				removedoublew();
+			});		
+			
+			/* remove after change of favorites	*/
+			$(document).on('click','.elementor-context-menu-list',function(){
+				setTimeout(favochange,500);
+			});
+			
+			function favochange(){		
+				if(document.querySelector('#elementor-panel-categories') !== null){	
+					const targetNode = document.getElementById('elementor-panel-categories');
+					const config = { childList: true, subtree: true };
+					const callback = function(mutationsList, observer){
+						for(const mutation of mutationsList) {
+							if (mutation.type === 'childList') {
+								removedoublew();
+							}
+						}
+					};
+					const observer = new MutationObserver(callback);
+					observer.observe(targetNode, config);
+				}
+			}
+			
+			/* function to remove double widgets */
+			function removedoublew(){
+				var elic = $(document).find("#elementor-panel-category-favorites .elementor-panel-category-items .elementor-element-wrapper .icon i");
+				var eltitle = $(document).find("#elementor-panel-category-favorites .elementor-panel-category-items .elementor-element-title-wrapper div");
+				for(var y = 0; y < elic.length; y++ ){
+					var ico = elic[y].classList;
+					var ictitle = eltitle[y].innerHTML;
+					$(document).find("[id^=elementor-panel-category]:not(#elementor-panel-category-favorites) .elementor-element-wrapper").each(function(){
+						wtitle = $(this).find(".title");
+						if( $(this).find("." + ico) && wtitle.html() == ictitle ){
+							$(this).css('display','none');
+						}
+					});
+					
+				}
+				if(elic.length > 0){
+					clearInterval(startdouble);
+				}
+			}
 
+		
 });
