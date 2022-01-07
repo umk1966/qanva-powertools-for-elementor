@@ -20,11 +20,19 @@ class Qanvapowerusertoolscontrols{
 			$page->start_controls_section(
 				'qanva_poweruser',
 				[
-					'label' => 'Poweruser tools',
+					'label' => 'Poweruser Tools',
 					'tab' => Controls_Manager::TAB_SETTINGS,
 				]
 			);
 
+				$page->add_control(
+					'control_qpt_widgets',
+					[
+						'label' => __( 'Widgets', 'qanva-powertools-for-elementor' ),
+						'type' => \Elementor\Controls_Manager::HEADING,
+					]
+				);
+				
 				$page->add_control(
 					'qanva_pt_use',
 					[
