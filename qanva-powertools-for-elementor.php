@@ -19,7 +19,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit;
 }
 	
-	define( 'MAKEPOWERSETTINGSVERSION', '2.0.0' );
+	define( 'MAKEPOWERSETTINGSVERSION', '2.1.0' );
 	    
 	if ( !get_option( 'qanva_buttons_for_elementor_select' ) ) {
 					add_option( 'qanva_buttons_for_elementor_select', '0' );
