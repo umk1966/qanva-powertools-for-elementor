@@ -48,6 +48,7 @@ Store your favorite widgets and reset in case of problems
 
 = 2.1.0 =
 Added removing double appearance of favorite widgets
+Added auto amount of widgets on panel resizing
 
 
 * Add special settings, cloning of pages,posts/templates in Elementor. Align 3 or 4 widget buttons instead of only 2, remove the widget name and replace it with a tooltipp and remove standard WorPress widgets. Clone your post,pages and templates directly from Elementor and open it. You also can rename the post_name which mostly is used to create the permalink of your page.

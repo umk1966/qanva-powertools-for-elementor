@@ -26,6 +26,8 @@
 									break;
 						case "4" : var textnode = document.createTextNode(".elementor-panel .elementor-responsive-panel{grid-template-columns: repeat(auto-fill, minmax(Min(135px, calc( 20% - 5px)), 1fr)) !important}" + notextadd);
 									break;
+						case "x" : var textnode = document.createTextNode(".elementor-panel .elementor-responsive-panel{grid-template-columns: repeat(auto-fill, minmax(Min(60px,calc(100% - 60px)),1fr)) !important}" + notextadd);
+									break;
 					}
 						newEl.append(textnode);
 							if(document.querySelector('#elementor-panel-inner') != null ){  

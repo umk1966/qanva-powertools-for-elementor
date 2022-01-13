@@ -71,7 +71,7 @@ class Qanvapowerusertoolscontrols{
 					[
 						'label' => '',
 						'type' => \Elementor\Controls_Manager::RAW_HTML,
-						'raw' => '<div style="margin-top:5px;width:47%;float:left;">' . __( 'Widget column count', 'qanva-powertools-for-elementor' ) . '</div><div id="qanva_pt_width_after"><select id="qanva_pt_width" onchange="ptwidthchange(this.value,\'x\')"><option value="2" selected>standard</option><option value="3">3</option><option value="4">4</option></select><i class="eicon-sort-down" id="qanva_pt_width_after_icon"></i></div>',
+						'raw' => '<div style="margin-top:5px;width:47%;float:left;">' . __( 'Widget column count', 'qanva-powertools-for-elementor' ) . '</div><div id="qanva_pt_width_after"><select id="qanva_pt_width" onchange="ptwidthchange(this.value,\'x\')"><option value="2" selected>standard</option><option value="3">3</option><option value="4">4</option><option value="x">auto</option></select><i class="eicon-sort-down" id="qanva_pt_width_after_icon"></i></div>',
 					]
 				);		
 			
