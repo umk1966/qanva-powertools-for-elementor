@@ -3,7 +3,7 @@ Contributors: ukischkel, fab22, qanva.tech
 Tags: Elementor, user expirience, tools, cloning, improved workflow
 Requires at least: 4.0.0
 Requires PHP: 7
-Tested up to: 5.8.3
+Tested up to: 5.9
 Stable tag: 2.1.0
 Version: 2.1.0
 Plugin URL: https://qanva.tech/qanva-powertools-for-elementor

@@ -40,10 +40,10 @@ final class MAKEPOWERSETTINGSELEMENTOR{
   const  MINIMUM_PHP_VERSION = '7.0' ;
   private static  $_instance = null ;
     public static function instance(){
-        if ( is_null( self::$_instance ) ) {
-            self::$_instance = new self();
-        }
-        return self::$_instance;
+     if ( is_null( self::$_instance ) ) {
+         self::$_instance = new self();
+     }
+     return self::$_instance;
     }
     
     public function __construct(){
@@ -320,7 +320,7 @@ final class MAKEPOWERSETTINGSELEMENTOR{
             
         if ( 1 == $jumper ) {
             echo  '<style>' ;
-            echo  "#qanvaeebselect,#qanvaeebcloneselect{border:none;appearance: none;-webkit-appearance: none;-moz-appearance: none;cursor: pointer;height:40px;background:white url(\"data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0z' fill='white'/><path d='M7 10l5 5 5-5z'/></svg>\") no-repeat 95%;border: 1px solid #e6e9ec;padding: 3px 35px 3px 15px;border-radius:0;margin:0 0 10px 0}" ;
+            echo  "#qanvaeebselect,#qanvaeebcloneselect{border:none;appearance: none;-webkit-appearance: none;-moz-appearance: none;cursor: pointer;height:40px;background:white url(\"data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0z' fill='white'/><path d='M7 10l5 5 5-5z'/></svg>\") no-repeat 95%;border: 1px solid #e6e9ec;padding: 3px 35px 3px 15px;border-radius:0;margin:0 0 10px 0;color:dimgrey}" ;
             echo  '</style>' ;
         }
         ?>
@@ -371,14 +371,14 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 				$cloning = "off";
 			}
 
-			$linkurl ='';
-			$target ='';
-			$name ='';
+			$linkurl = [];
+			$target = [];
+			$linkname = [];
 			if(!empty($buttonwerte)){
 				foreach ( $buttonwerte as $key => $val ) {
-					$linkurl .= $val[0] . ',';
-					$target .= $val[1] . ',';
-					$name .= $val[2] . ',';
+					array_push($linkurl,$val[0]);
+					array_push($target,$val[1]);
+					array_push($linkname,$val[2]);
 				}
 			}
 
@@ -388,9 +388,9 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 				'jumper' => $jumpval,
 				'cloning' => $cloning,
 				'linkliste' => $this->eebaoptionmaker()[0],
-				'qanva_extrabutton_url' => [substr( $linkurl, 0, -1 )],
-				'qanva_extrabutton_target' => [substr( $target, 0, -1 )],
-				'qanva_extrabutton_text' => [substr( $name, 0, -1 )],
+				'qanva_extrabutton_url' => $linkurl,
+				'qanva_extrabutton_target' => $target,
+				'qanva_extrabutton_text' => $linkname,
 				'qanva_extrabutton_self' => __( 'Open in same window', 'qanva-powertools-for-elementor' ),
 				'qanva_extrabutton_new' => __( 'Open in new window', 'qanva-powertools-for-elementor' ),
 				'qanva_extrabutton_clone' => esc_attr($clonetext),
@@ -403,6 +403,10 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 			wp_enqueue_style('qanva_pt_style',plugins_url( 'css/qanvapower_back.css', __FILE__ ),true,MAKEPOWERSETTINGSVERSION,'all' );
 		}
 		
+	public function ambient_shadow_styles_admin() {
+		
+	}
+	
 		/** Values by AJAX for new post_name **/
 		function setnewpermaname() {
 				global $wpdb;

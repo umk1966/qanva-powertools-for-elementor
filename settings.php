@@ -4,7 +4,25 @@
 		wp_enqueue_script('quikitjs');
 		
 ?>
-
+	<script type="text/javascript">
+	window.addEventListener( 'load', function(){
+		document.getElementById( 'wpfooter' ).remove();
+		var notice = document.getElementsByClassName( 'fs-notice' );
+		for(var i = 0;i < notice.length;i++){
+			notice[i].remove();
+		}
+	});
+	</script>
+	<style>
+html, body{
+    height:100%;
+    background:rgb(241, 241, 241) !important;
+}
+.qanva .logo{
+	width: 40px;
+margin: 0 10px 5px 0;
+}
+</style>
 <div class="wrap">
 <?php
 global $wpdb;

@@ -191,7 +191,7 @@ jQuery( document ).ready( function( $ ) {
 		}
 			$( '.qanvaselect' ).fadeIn();
 	}
-	var addbuttonstoelementormenucheck = setInterval( addbuttonstoelementormenu, 200 );
+	var addbuttonstoelementormenucheck = setInterval( addbuttonstoelementormenu, 500 );
 	
 	/* check and fix permalink */
 	function permacheckfunc(){
@@ -212,7 +212,7 @@ jQuery( document ).ready( function( $ ) {
 	 $('#qanvanewpname').on('focusout',function(){
 			permacheckfunc();
 		});
-	},100);
+	},500);
 	
 			/* remove favorite get and set */
 			var checkfavoritexist = setInterval(function(){
@@ -228,7 +228,7 @@ jQuery( document ).ready( function( $ ) {
 						clearInterval(checkfavoritexist);
 					}
 				}
-			},100);
+			},500);
 	
 			$(document).on('click','#qanvasaveperma',function(){
 				var parts = window.location.href.split('?');
