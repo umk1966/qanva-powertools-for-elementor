@@ -3,7 +3,7 @@
  * Plugin Name: Qanva Powertools for Elementor
  * Description: Add special settings, cloning of pages,posts/templates in Elementor
  * Plugin URI:  https://qanva.tech/qanva-powertools-for-elementor
- * Version:     2.1.1
+ * Version:     2.2.0
  * Author:      ukischkel, fab22
  * Author URI:  https://qanva.tech
  * License:					GPL v2
@@ -19,7 +19,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit;
 }
 	
-	define( 'MAKEPOWERSETTINGSVERSION', '2.1.1' );
+	define( 'MAKEPOWERSETTINGSVERSION', '2.2.0' );
 	    
 	if ( !get_option( 'qanva_buttons_for_elementor_select' ) ) {
 					add_option( 'qanva_buttons_for_elementor_select', '0' );
@@ -29,6 +29,12 @@ if ( !defined( 'ABSPATH' ) ) {
 	}
 	if ( !get_option( 'qanva_buttons_for_elementor_clone' ) ) {
 					add_option( 'qanva_buttons_for_elementor_clone', [0,0] );
+	}
+	if ( !get_option( 'qanva_buttons_for_elementor_font' ) ) {
+					add_option( 'qanva_buttons_for_elementor_font', [0,0] );
+	}
+	if ( !get_option( 'qanva_buttons_for_elementor_fontaw' ) ) {
+					add_option( 'qanva_buttons_for_elementor_fontaw', [0,0] );
 	}
 
     $name = __( 'Qanva Powertools for Elementor', 'qanva-powertools-for-elementor' );
@@ -49,6 +55,9 @@ final class MAKEPOWERSETTINGSELEMENTOR{
     public function __construct(){
 					add_action( 'plugins_loaded', [ $this,'ladesprachdateifuerpowersettingsforelementor'] );
 					add_action( 'plugins_loaded', [ $this, 'onpluginsloaded' ] );
+     if(1 == get_option( 'qanva_buttons_for_elementor_font')){
+      add_filter( 'elementor/frontend/print_google_fonts', '__return_false' );
+     }
     }
 
     public function ladesprachdateifuerpowersettingsforelementor() {
@@ -146,6 +155,7 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 			add_action( 'wp_ajax_getqptefavorites', [ $this, 'getqptefavorites' ] );
 			add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'powersettings_scripts' ] );
 			add_action( 'elementor/controls/controls_registered', [ $this, 'init_controls' ] );
+			add_action( 'elementor/frontend/after_register_styles', [ $this, 'remove_fontawsome' ] );
 		}
 		
 		/** Elementor controls **/		
@@ -403,10 +413,14 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 			wp_enqueue_style('qanva_pt_style',plugins_url( 'css/qanvapower_back.css', __FILE__ ),true,MAKEPOWERSETTINGSVERSION,'all' );
 		}
 		
-	public function ambient_shadow_styles_admin() {
-		
-	}
-	
+  public function remove_fontawsome() {
+   if(1 == get_option( 'qanva_buttons_for_elementor_fontaw')){
+    foreach( [ 'solid', 'regular', 'brands' ] as $style ) {
+     wp_deregister_style( 'elementor-icons-fa-' . $style );
+    }
+   }
+  }
+  
 		/** Values by AJAX for new post_name **/
 		function setnewpermaname() {
 				global $wpdb;

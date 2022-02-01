@@ -4,8 +4,8 @@ Tags: Elementor, user expirience, tools, cloning, improved workflow
 Requires at least: 4.0.0
 Requires PHP: 7
 Tested up to: 5.9
-Stable tag: 2.1.1
-Version: 2.1.1
+Stable tag: 2.2.0
+Version: 2.2.0
 Plugin URL: https://qanva.tech/qanva-powertools-for-elementor
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -52,6 +52,9 @@ Added auto amount of widgets on panel resizing
 
 = 2.1.1 =
 Option to save and retrieve favorite widgets optimised
+
+= 2.2.0 =
+Added function to remove Google fonts and Fontawsome from frontend
 
 
 * Add special settings, cloning of pages,posts/templates in Elementor. Align 3 or 4 widget buttons instead of only 2, remove the widget name and replace it with a tooltipp and remove standard WorPress widgets. Clone your post,pages and templates directly from Elementor and open it. You also can rename the post_name which mostly is used to create the permalink of your page.

@@ -61,6 +61,20 @@ global $wpdb;
 						if( !isset( $cleanedpost[ 'cloneopen' ] ) ){
 							update_option( 'qanva_buttons_for_elementor_clone', [get_option( 'qanva_buttons_for_elementor_clone' )[0],0] );
 						}
+					/** Fontawsome speichern **/
+						if( isset( $cleanedpost[ 'nofontaw' ] ) && 1 == $cleanedpost[ 'nofontaw' ] ){
+							update_option( 'qanva_buttons_for_elementor_fontaw',1 );
+						}
+						if( !isset( $cleanedpost[ 'nofontaw' ] ) ){
+							update_option( 'qanva_buttons_for_elementor_fontaw',0 );
+						}
+					/** Google Fonts speichern **/
+						if( isset( $cleanedpost[ 'nofont' ] ) && 1 == $cleanedpost[ 'nofont' ] ){
+							update_option( 'qanva_buttons_for_elementor_font',1 );
+						}
+						if( !isset( $cleanedpost[ 'nofont' ] ) ){
+							update_option( 'qanva_buttons_for_elementor_font',0 );
+						}
 				/** Links speichern **/
     $newarr = [];
 				$suche = [ 'Ü','ü','Ö','ö', 'Ä', 'ä', 'ß', '*'  ];
@@ -101,6 +115,17 @@ global $wpdb;
 			$cloneop = 'checked';
 		}
 	}
+	
+	$nogfont = '';
+	if( 1 == get_option( 'qanva_buttons_for_elementor_font' ) ){
+		$nogfont = 'checked';
+	}
+	
+	$nofawsome = '';
+	if( 1 == get_option( 'qanva_buttons_for_elementor_fontaw' ) ){
+		$nofawsome = 'checked';
+	}
+	
 	
 	/** verlinkbare Optionen **/
 		function qanvaebe_get_links(){
@@ -272,6 +297,22 @@ global $wpdb;
 		<div class="switchbox  uk-width-1-1">
 		<label for="switch-3" class="switch">
    <input type="checkbox" id="switch-3" name="cloneopen" class="uk-switch"  form="qanvaebeform" value="1" autocomplete="off" <?php echo esc_attr($cloneop);?>>
+			<span class="slider round"></span>
+   </label>
+		</div>
+<hr>
+		<h5><?php _e( "Remove Google-Fonts from frontend", "qanva-powertools-for-elementor" ); ?></h5>
+		<div class="switchbox  uk-width-1-1">
+		<label for="switch-4" class="switch">
+   <input type="checkbox" id="switch-4" name="nofont" class="uk-switch"  form="qanvaebeform" value="1" autocomplete="off" <?php echo esc_attr($nogfont);?>>
+			<span class="slider round"></span>
+   </label>
+		</div>
+<hr>
+		<h5><?php _e( "Remove Fontawsome from frontend", "qanva-powertools-for-elementor" ); ?></h5>
+		<div class="switchbox  uk-width-1-1">
+		<label for="switch-5" class="switch">
+   <input type="checkbox" id="switch-5" name="nofontaw" class="uk-switch"  form="qanvaebeform" value="1" autocomplete="off" <?php echo esc_attr($nofawsome);?>>
 			<span class="slider round"></span>
    </label>
 		</div>
