@@ -10,8 +10,8 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: qanva-powertools-for-elementor
  * Domain Path: languages
- * Elementor tested up to: 3.5.4
- * Elementor Pro tested up to: 3.5.2
+ * Elementor tested up to: 3.5.5
+ * Elementor Pro tested up to: 3.6.0
  */
 
   
