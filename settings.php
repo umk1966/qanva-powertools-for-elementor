@@ -40,27 +40,6 @@ global $wpdb;
 	
 			/* speichern */
    if ( isset( $cleanedpost[ 'qanvasubmit' ]  ) && wp_verify_nonce( $_POST[ 'qanvaproofone' ], 'qanvasubmit' ) ) {
-					/** Quickchanger speichern **/
-						if( isset( $cleanedpost[ 'active' ] ) && 1 == $cleanedpost[ 'active' ] ){
-							update_option( 'qanva_buttons_for_elementor_select', 1 );
-						}
-						if( !isset( $cleanedpost[ 'active' ] ) ){
-							update_option( 'qanva_buttons_for_elementor_select', 0 );
-						}
-					/** Clonen speichern **/
-						if( isset( $cleanedpost[ 'cloneactive' ] ) && 1 == $cleanedpost[ 'cloneactive' ] ){
-							update_option( 'qanva_buttons_for_elementor_clone', [1,get_option( 'qanva_buttons_for_elementor_clone' )[1]] );
-						}
-						if( !isset( $cleanedpost[ 'cloneactive' ] )){
-							update_option( 'qanva_buttons_for_elementor_clone', [0,get_option( 'qanva_buttons_for_elementor_clone' )[1]] );
-						}
-					/** Clone open speichern **/
-						if( isset( $cleanedpost[ 'cloneopen' ] ) && 1 == $cleanedpost[ 'cloneopen' ] ){
-							update_option( 'qanva_buttons_for_elementor_clone', [get_option( 'qanva_buttons_for_elementor_clone' )[0],1] );
-						}
-						if( !isset( $cleanedpost[ 'cloneopen' ] ) ){
-							update_option( 'qanva_buttons_for_elementor_clone', [get_option( 'qanva_buttons_for_elementor_clone' )[0],0] );
-						}
 					/** Fontawsome speichern **/
 						if( isset( $cleanedpost[ 'nofontaw' ] ) && 1 == $cleanedpost[ 'nofontaw' ] ){
 							update_option( 'qanva_buttons_for_elementor_fontaw',1 );
@@ -75,6 +54,7 @@ global $wpdb;
 						if( !isset( $cleanedpost[ 'nofont' ] ) ){
 							update_option( 'qanva_buttons_for_elementor_font',0 );
 						}
+						
 				/** Links speichern **/
     $newarr = [];
 				$suche = [ 'Ü','ü','Ö','ö', 'Ä', 'ä', 'ß', '*'  ];
@@ -217,28 +197,7 @@ global $wpdb;
 				$( 'select[name=pagetarget]' ).show();
 			}
 		});
-		
-		$( '#switch-1' ).on( 'change', function(){
-			if( $( this ).is( ':checked' ) ){
-				$( "#switch-1" ).prop( "checked", true );
-			}
-			else{
-				$( "#switch-1" ).prop( "checked", false );
-			}
-		});
-		
-		<?php 
-			if( 1 == get_option( 'qanva_buttons_for_elementor_select' ) ){
-		?>
-				$( "#switch-1" ).prop( "checked", true );
-		<?php		
-			}
-			else{
-		?>
-				$( "#switch-1" ).prop( "checked", false );
-		<?php				
-			}
-		?>
+
 	});
 	</script>
 
@@ -276,30 +235,6 @@ global $wpdb;
 		<?php _e( "Same window", "qanva-powertools-for-elementor" ); ?>:&nbsp;<input type="radio" name="linktarget" form="qanvaebeform"  class="uk-radio" value="_self" checked />
 		<?php _e( "or new one", "qanva-powertools-for-elementor" ); ?>:&nbsp;<input type="radio" name="linktarget" form="qanvaebeform"  class="uk-radio" value="_blank" />
 		</p>
-		<hr>
-		<h5><?php _e( "Enable \"Quickchanger\" in Elementor", "qanva-powertools-for-elementor" ); ?></h5>
-		<div class="switchbox  uk-width-1-1">
-		<label for="switch-1" class="switch">
-   <input type="checkbox" id="switch-1" name="active" class="uk-switch"  form="qanvaebeform" value="1" autocomplete="off">
-			<span class="slider round"></span>
-  </label>
-		</div>
-		<span class="small red"><?php _e( " Notice", "qanva-powertools-for-elementor" ); ?>:</span><br><span class="small"><?php _e( " \"Quickchanger\" is a dropdown link-list to post, pages, landing-pages and templates.", "qanva-powertools-for-elementor" ); ?></span>
-		<hr>
-		<h5><?php _e( "Enable cloning of pages,posts and templates in Elementor", "qanva-powertools-for-elementor" ); ?></h5>
-		<div class="switchbox  uk-width-1-1">
-		<label for="switch-2" class="switch">
-  	<input type="checkbox" id="switch-2" name="cloneactive" class="uk-switch"  form="qanvaebeform" value="1" autocomplete="off" <?php echo esc_attr($clonesel);?>>
-			<span class="slider round"></span>
-  </label>
-		</div>
-		<h5><?php _e( "Open cloned page/post/template directly", "qanva-powertools-for-elementor" ); ?></h5>
-		<div class="switchbox  uk-width-1-1">
-		<label for="switch-3" class="switch">
-   <input type="checkbox" id="switch-3" name="cloneopen" class="uk-switch"  form="qanvaebeform" value="1" autocomplete="off" <?php echo esc_attr($cloneop);?>>
-			<span class="slider round"></span>
-   </label>
-		</div>
 <hr>
 		<h5><?php _e( "Remove Google-Fonts from frontend", "qanva-powertools-for-elementor" ); ?></h5>
 		<div class="switchbox  uk-width-1-1">

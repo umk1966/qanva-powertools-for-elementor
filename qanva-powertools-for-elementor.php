@@ -3,7 +3,7 @@
  * Plugin Name: Qanva Powertools for Elementor
  * Description: Add special settings, cloning of pages,posts/templates in Elementor
  * Plugin URI:  https://qanva.tech/qanva-powertools-for-elementor
- * Version:     2.2.0
+ * Version:     2.2.1
  * Author:      ukischkel, fab22
  * Author URI:  https://qanva.tech
  * License:					GPL v2
@@ -19,16 +19,10 @@ if ( !defined( 'ABSPATH' ) ) {
     exit;
 }
 	
-	define( 'MAKEPOWERSETTINGSVERSION', '2.2.0' );
+	define( 'MAKEPOWERSETTINGSVERSION', '2.2.1' );
 	    
-	if ( !get_option( 'qanva_buttons_for_elementor_select' ) ) {
-					add_option( 'qanva_buttons_for_elementor_select', '0' );
-	}
 	if ( !get_option( 'qanva_buttons_for_elementor' ) ) {
 					add_option( 'qanva_buttons_for_elementor', '' );
-	}
-	if ( !get_option( 'qanva_buttons_for_elementor_clone' ) ) {
-					add_option( 'qanva_buttons_for_elementor_clone', [0,0] );
 	}
 	if ( !get_option( 'qanva_buttons_for_elementor_font' ) ) {
 					add_option( 'qanva_buttons_for_elementor_font', [0,0] );
@@ -156,6 +150,7 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 			add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'powersettings_scripts' ] );
 			add_action( 'elementor/controls/controls_registered', [ $this, 'init_controls' ] );
 			add_action( 'elementor/frontend/after_register_styles', [ $this, 'remove_fontawsome' ] );
+   add_action( 'wp_footer', [ $this, 'shortcutpreview' ] );
 		}
 		
 		/** Elementor controls **/		
@@ -166,7 +161,7 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 
 
     /** read all posts, pages, landing-pages and create option-list **/
-				public function eebaoptionmaker(){
+				public function eebaoptionmaker($place){
 					global  $wpdb;
 					$linkval = '';
 					$linkvalb = '';
@@ -188,7 +183,7 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 							$linkvalb = '<optgroup label="Post">';
 								for ( $x = 0 ;  $x < count( $allposts ) ;  $x++ ) {
 									$adda = '';
-									if($allposts[$x]->ID == $isaktid){
+									if($allposts[$x]->ID == $isaktid && 2 == $place){
 										$adda = 'selected';
 									}
 											$linkval .= '<option value="' . $allposts[$x]->ID . '">Post-Title: ' . $allposts[$x]->post_title . ' - (' . __( $allposts[$x]->post_name ) . ')</option>';
@@ -206,7 +201,7 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 												$pname = $allpages[$y]->post_title;
 										}
 									$addb = '';
-									if($allpages[$y]->ID == $isaktid){
+									if($allpages[$y]->ID == $isaktid && 2 == $place && 2 == $place){
 										$addb = 'selected';
 									}
 											$linkval .= '<option value="' . $allpages[$y]->ID . '">Page-Title: ' . $allpages[$y]->post_title . ' - (' .  $pname .  ')</option>';
@@ -220,7 +215,7 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 							$linkvalb .= '<optgroup label="Landingpage">';
 								for ( $q = 0 ;  $q < count( $alllandingpages ) ;  $q++ ) {
 									$addc = '';
-									if($alllandingpages[$q]->ID == $isaktid){
+									if($alllandingpages[$q]->ID == $isaktid && 2 == $place){
 										$addc = 'selected';
 									}
 											$linkval .= '<option value="' . $alllandingpages[$q]->ID . '">Landingpage: ' . $alllandingpages[$q]->post_name . ' - (' . $alllandingpages[$q]->post_title  . ')</option>';
@@ -234,7 +229,7 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 								$linkval .= '<optgroup label="Templates">';
 								$linkvalb .= '<optgroup label="Templates">';
 									$addd = '';
-									if($alltemplates[$z]->ID == $isaktid){
+									if($alltemplates[$z]->ID == $isaktid && 2 == $place){
 										$addd = 'selected';
 									}
 											$linkval .= '<option value="' . $alltemplates[$z]->ID . '">Templates: ' . $alltemplates[$z]->post_name . ' - (' . $alltemplates[$z]->post_title . ')</option>';
@@ -312,34 +307,36 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 
               }
               /** open clone in Elementor **/
-              if( 1 == get_option( 'qanva_buttons_for_elementor_clone' )[1] ){
-               echo '<meta http-equiv="refresh" content="0; url=post.php?post=' . esc_attr($newid) . '&action=elementor">';
+              echo '<meta http-equiv="refresh" content="0; url=post.php?post=' . esc_attr($newid) . '&action=elementor">';
                 exit;
-              }
              
         }
    
+
+        $clonetext = __( 'Clone and open', 'qanva-powertools-for-elementor' );
         
-        $jumper = get_option( 'qanva_buttons_for_elementor_select' );
-        $jumperc = get_option( 'qanva_buttons_for_elementor_clone' );
+        echo  '<style>' ;
+        echo  "#qanvaeebselect,#qanvaeebcloneselect,#qanvaeebselectmodal{border:none;appearance: none;-webkit-appearance: none;-moz-appearance: none;cursor: pointer;height:34px;background:white url(\"data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0z' fill='white'/><path d='M7 10l5 5 5-5z'/></svg>\") no-repeat 97%;border: 1px solid #e6e9ec;padding: 3px 35px 3px 15px;border-radius:0;margin:0 0 10px 0;color:dimgrey}" ;
+        echo  '</style>' ;
         
-        $clonetext = __( 'Clone', 'qanva-powertools-for-elementor' );
-        if(1 == $jumperc[1]){
-         $clonetext = __( 'Clone and open', 'qanva-powertools-for-elementor' );
-        }
-            
-        if ( 1 == $jumper ) {
-            echo  '<style>' ;
-            echo  "#qanvaeebselect,#qanvaeebcloneselect{border:none;appearance: none;-webkit-appearance: none;-moz-appearance: none;cursor: pointer;height:40px;background:white url(\"data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0z' fill='white'/><path d='M7 10l5 5 5-5z'/></svg>\") no-repeat 95%;border: 1px solid #e6e9ec;padding: 3px 35px 3px 15px;border-radius:0;margin:0 0 10px 0;color:dimgrey}" ;
-            echo  '</style>' ;
-        }
         ?>
 									<!-- modal -->			
 									<div id="qanvaeeboverlay">
-									<div class="qanvaeebinfo">
+									<div class="qanvaeebinfo" id="qanvaeebinfo">
 									<form method="post" action="">
-									<select name="qanvaeebcloneselect" id="qanvaeebcloneselect" autocomplete="off"><option><?php _e( 'Select to clone', 'qanva-powertools-for-elementor' );?></option>
-									<?php echo $this->eebaoptionmaker()[1];?>
+         <?php _e( 'Select to open', 'qanva-powertools-for-elementor' );?>
+									<br>
+         <select name="qanvaeebselectmodal" id="qanvaeebselectmodal" autocomplete="off" >
+									<option><?php _e( 'Select to open', 'qanva-powertools-for-elementor' );?></option>
+									<?php echo  $this->eebaoptionmaker(1)[1]; ?>
+         </select>
+									<br>
+         <input type="button" class="qanvaquicknew" onclick="window.open('post.php?post=' + document.getElementById('qanvaeebselectmodal').value + '&action=elementor');document.getElementById('qanvaeeboverlay').style.display = 'none';" value="<?php _e( 'New Window', 'qanva-powertools-for-elementor' )?>">
+         <input type="button" class="qanvaquicksame" onclick="window.location = 'post.php?post=' + document.getElementById('qanvaeebselectmodal').value + '&action=elementor'" value="<?php _e( 'Same Window', 'qanva-powertools-for-elementor' )?>">
+									<?php _e( 'Select to clone', 'qanva-powertools-for-elementor' );?>
+									<br>
+									<select name="qanvaeebcloneselect" id="qanvaeebcloneselect" autocomplete="off">
+									<?php echo $this->eebaoptionmaker(2)[1];?>
 									</select><br>
 									<?php _e( 'Set new name of clone (optional)', 'qanva-powertools-for-elementor' )?><br>
 									<input name="qanvaeebperma" type="text" pattern="[a-z0-9]{2,}[a-z0-9-]{1,}" autocomplete="off" title="<?php _e( 'Only small letters, numbers and dash allowed, begin with min 4 characters', 'qanva-powertools-for-elementor' )?>"><br>
@@ -355,31 +352,13 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 		/** react to saved values and send to JS **/		
 		public function powersettings_scripts(){ 
    $savevalues = [];
-			$jumper = get_option( 'qanva_buttons_for_elementor_select' );
-			$jumperc = get_option( 'qanva_buttons_for_elementor_clone' );
 			if ( !empty(get_option( 'qanva_buttons_for_elementor' )) ) {
 				$savevalues = get_option( 'qanva_buttons_for_elementor' );
 			}
 			
 			$buttonwerte = array_reverse( $savevalues );  
-			
-			$clonetext = __( 'Clone', 'qanva-powertools-for-elementor' );
-			if(1 == $jumperc[1]){
-				$clonetext = __( 'Clone and open', 'qanva-powertools-for-elementor' );
-			}
-			
-			if ( 1 == $jumper ) {
-				$jumpval = "on";
-			}
-			else{
-				$jumpval = "off";
-			}
-			if(1 == $jumperc[0]){
-				$cloning = "on";
-			}
-			else{
-				$cloning = "off";
-			}
+
+			$clonetext = __( 'Clone and open', 'qanva-powertools-for-elementor' );
 
 			$linkurl = [];
 			$target = [];
@@ -395,9 +374,7 @@ final class MAKEPOWERSETTINGSELEMENTOR{
     wp_enqueue_script('qanva_powertools',plugins_url( 'js/qanvapower_back.js', __FILE__ ),[ 'jquery' ],MAKEPOWERSETTINGSVERSION );
 				wp_localize_script('qanva_powertools','qanvapowertoolsvals',[
 				'seltext' => __( 'Select to open', 'qanva-powertools-for-elementor' ),
-				'jumper' => $jumpval,
-				'cloning' => $cloning,
-				'linkliste' => $this->eebaoptionmaker()[0],
+				'linkliste' => $this->eebaoptionmaker(1)[0],
 				'qanva_extrabutton_url' => $linkurl,
 				'qanva_extrabutton_target' => $target,
 				'qanva_extrabutton_text' => $linkname,
@@ -449,6 +426,14 @@ final class MAKEPOWERSETTINGSELEMENTOR{
 				echo "OK";
 			}
 				
+		}
+		
+		/** shortcut im Previewfenster **/
+		public function shortcutpreview(){
+			if( \Elementor\Plugin::$instance->preview->is_preview_mode() ){
+     wp_register_script('qanvapowershortcut', plugin_dir_url( __FILE__ ) . 'js/qanvapowershortcut.js', [],MAKEPOWERSETTINGSVERSION, true);
+     wp_enqueue_script('qanvapowershortcut');
+			}
 		}
 }
 

@@ -139,7 +139,7 @@
 		}, 500);
 
 jQuery( document ).ready( function( $ ) {		
-	$(document).on('change','#qanvaeebselect',function(){
+	$(document).on('change','#qanvaeebselect, #qanvaeebselectmodal',function(){
 		var gotourl = $(this).val();
 		window.location = 'post.php?post=' + gotourl + '&action=elementor';
 	});
@@ -151,16 +151,16 @@ jQuery( document ).ready( function( $ ) {
 	function addbuttonstoelementormenu(){
 
 		$( '.elementor-panel .elementor-panel-menu-item-exit-to-dashboard a[href]' ).eq( 0 ).prop( 'href', './');
-			var qanva_select = '<div class="elementor-panel-menu-group-title qebheader">QUICKCHANGER</div>';
+			var qanva_select = '<div class="elementor-panel-menu-group-title qebheader">QUICKCHANGER<br><span style="text-transform:none;display:block;margin-top:5px">(Shortcut: ALT/CTRL + &#113;)</span></div>';
 			qanva_select += '<div class="elementor-panel-menu-item elementor-panel-menu-item qanvaselect" style="display:none;cursor:auto;background:none;" >';
 			qanva_select += '<select name="qanvaeebselect" id="qanvaeebselect"><option>' + qanvapowertoolsvals.seltext + '</option>';
 			qanva_select += qanvapowertoolsvals.linkliste ;
 			qanva_select += '</select>';
 			qanva_select += '</div>';
-			if('on' == qanvapowertoolsvals.cloning){
-				qanva_select += '<input type="button" id="elclone" value="' + qanvapowertoolsvals.qanva_extrabutton_clone + '">';
-			}
-			if( $( '.elementor-panel .qanvaselect' ).length < 1 && 'on' == qanvapowertoolsvals.jumper){
+			
+			qanva_select += '<input type="button" id="elclone" value="' + qanvapowertoolsvals.qanva_extrabutton_clone + '">';
+			
+			if( $( '.elementor-panel .qanvaselect' ).length < 1){
 				$( qanva_select ).insertAfter( '.elementor-panel .elementor-panel-menu-item-exit-to-dashboard' );
 			}
 		
@@ -344,4 +344,19 @@ jQuery( document ).ready( function( $ ) {
 			}
 
 		
+});
+
+top.document.getElementById('qanvaeeboverlay').addEventListener('click',function(event){
+if(event.target.id != 'qanvaeebinfo' && event.target.id != 'qanvaeebcloneselect' && event.target.id != 'qanvaeebselectmodal' && event.target.id != ''){
+   top.document.getElementById('qanvaeeboverlay').style.display = 'none';
+}
+});
+top.document.addEventListener ("keydown", function (event) {
+ if(event.key == 'q' && (event.altKey == true || event.ctrlKey == true)){
+		top.document.getElementById('qanvaeeboverlay').style.display = 'block';
+		top.document.getElementById('qanvaeebselectmodal').focus();
+	}
+ if(event.keyCode == 27){
+		top.document.getElementById('qanvaeeboverlay').style.display = 'none';
+	}
 });

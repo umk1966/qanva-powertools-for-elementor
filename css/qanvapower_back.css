@@ -26,14 +26,20 @@ z-index: 1;
 	padding: 20px;
 	border-radius: 10px;
 	margin: calc(21% - 100px) auto 0 auto;
+	color: #6d7882;
+	position:relative;
+	z-index:99999999;
 }
-.qanvaeebinfo input[type="text"],.qanvaeebinfo input[type="button"]{
+.qanvaeebinfo select:focus, .qanvaeebinfo input:focus{
+	border-color:black !important;
+}
+.qanvaeebinfo input[type="text"],.qanvaeebinfo input[type="button"]:not(.qanvaquicknew):not(.qanvaquicksame){
 	margin:5px 0;
 	border-radius:0;
 	background:white;
 	color:dimgrey;
 }
-.qanvaeebinfo input[name="openmyclone"], #elclone{
+.qanvaeebinfo input[name="openmyclone"], #elclone,.qanvaeebinfo .qanvaquicknew,.qanvaeebinfo .qanvaquicksame{
 	margin:5px 0;
 background: #0085ba;
 color: white;
@@ -42,7 +48,17 @@ border-radius: 0;
 letter-spacing: 1px;
 cursor: pointer;
 }
-.qanvaeebinfo input[type="button"]{
+.qanvaeebinfo .qanvaquicknew{
+	width: calc(50% - 2px);
+float: inline-start;
+margin:0 2px 5px 0;
+}
+.qanvaeebinfo .qanvaquicksame{
+	width: calc(50% - 2px);
+float: inline-start;
+	margin:0 0 5px 2px;
+}
+.qanvaeebinfo input[type="button"]:not(.qanvaquicknew):not(.qanvaquicksame){
 cursor:pointer;
 background:lightgrey;
 color:dimgrey;

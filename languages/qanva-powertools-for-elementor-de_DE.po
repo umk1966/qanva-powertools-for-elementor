@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Qanva Powertools\n"
-"POT-Creation-Date: 2022-02-02 08:19+0100\n"
-"PO-Revision-Date: 2022-02-07 10:48+0100\n"
+"POT-Creation-Date: 2022-03-10 15:20+0100\n"
+"PO-Revision-Date: 2022-03-10 15:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: UKischkel\n"
 "Language: de_DE\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: controls/powertoolcontrols.php:31
 msgid "Widgets"
-msgstr ""
+msgstr "Widgets"
 
 #: controls/powertoolcontrols.php:39
 msgid "Remove widget names"
@@ -62,7 +62,7 @@ msgid "Set Page Permalink"
 msgstr "Seite Permalink setzen"
 
 #: controls/powertoolcontrols.php:124 controls/powertoolcontrols.php:152
-#: qanva-powertools-for-elementor.php:407 settings.php:321
+#: qanva-powertools-for-elementor.php:418 settings.php:321
 msgid "Save"
 msgstr "Speichern"
 
@@ -134,49 +134,58 @@ msgstr ""
 msgid "\"%1$s\" requires min PHP version \"%2$s\" running."
 msgstr "\"%1$s\" erfordert mindestens die PHP-Version \"%2$s\"."
 
-#: qanva-powertools-for-elementor.php:326
-#: qanva-powertools-for-elementor.php:366
+#: qanva-powertools-for-elementor.php:327
+#: qanva-powertools-for-elementor.php:377
 msgid "Clone"
 msgstr "Klonen"
 
-#: qanva-powertools-for-elementor.php:328
-#: qanva-powertools-for-elementor.php:368
+#: qanva-powertools-for-elementor.php:329
+#: qanva-powertools-for-elementor.php:379
 msgid "Clone and open"
 msgstr "Klonen und öffnen"
 
-#: qanva-powertools-for-elementor.php:341
+#: qanva-powertools-for-elementor.php:342
+#: qanva-powertools-for-elementor.php:408
+msgid "Select to open"
+msgstr "Wählen Sie zum Öffnen"
+
+#: qanva-powertools-for-elementor.php:348
+msgid "New Window"
+msgstr "Neues Fenster"
+
+#: qanva-powertools-for-elementor.php:349
+msgid "Same Window"
+msgstr "Gleiches Fenster"
+
+#: qanva-powertools-for-elementor.php:350
 msgid "Select to clone"
 msgstr "Zum Klonen auswählen"
 
-#: qanva-powertools-for-elementor.php:344
+#: qanva-powertools-for-elementor.php:355
 msgid "Set new name of clone (optional)"
 msgstr "Neuen Namen des Klons festlegen (optional)"
 
-#: qanva-powertools-for-elementor.php:345
+#: qanva-powertools-for-elementor.php:356
 msgid ""
 "Only small letters, numbers and dash allowed, begin with min 4 characters"
 msgstr ""
 "Nur Kleinbuchstaben, Ziffern und Bindestriche erlaubt, Beginn mit mindestens "
 "4 Zeichen"
 
-#: qanva-powertools-for-elementor.php:347
+#: qanva-powertools-for-elementor.php:358
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: qanva-powertools-for-elementor.php:397
-msgid "Select to open"
-msgstr "Wählen Sie zum Öffnen"
-
-#: qanva-powertools-for-elementor.php:404
+#: qanva-powertools-for-elementor.php:415
 msgid "Open in same window"
 msgstr "Im gleichen Fenster öffnen"
 
-#: qanva-powertools-for-elementor.php:405
+#: qanva-powertools-for-elementor.php:416
 msgid "Open in new window"
 msgstr "In neuem Fenster öffnen"
 
-#: qanva-powertools-for-elementor.php:408
-#: qanva-powertools-for-elementor.php:430
+#: qanva-powertools-for-elementor.php:419
+#: qanva-powertools-for-elementor.php:441
 msgid "Done"
 msgstr "Fertig"
 
