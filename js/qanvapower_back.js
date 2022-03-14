@@ -139,7 +139,7 @@
 		}, 500);
 
 jQuery( document ).ready( function( $ ) {		
-	$(document).on('change','#qanvaeebselect, #qanvaeebselectmodal',function(){
+	$(document).on('change','#qanvaeebselect',function(){
 		var gotourl = $(this).val();
 		window.location = 'post.php?post=' + gotourl + '&action=elementor';
 	});
