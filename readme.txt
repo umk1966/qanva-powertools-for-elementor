@@ -9,8 +9,8 @@ Version: 2.2.1
 Plugin URL: https://qanva.tech/qanva-powertools-for-elementor
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Elementor tested up to: 3.5.6
-Elementor Pro tested up to: 3.6.3
+Elementor tested up to: 3.6.0
+Elementor Pro tested up to: 3.6.4
 
 Poweruser settings for Elementor to improve your workflow
 
