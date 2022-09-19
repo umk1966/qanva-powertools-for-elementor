@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Qanva Powertools\n"
-"POT-Creation-Date: 2022-03-10 15:20+0100\n"
-"PO-Revision-Date: 2022-03-10 15:20+0100\n"
+"POT-Creation-Date: 2022-09-16 17:21+0200\n"
+"PO-Revision-Date: 2022-09-16 17:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: UKischkel\n"
 "Language: de_DE\n"
@@ -10,290 +10,287 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;esc_html__\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: controls/powertoolcontrols.php:31
+#: controls/powertoolcontrols.php:30
 msgid "Widgets"
 msgstr "Widgets"
 
-#: controls/powertoolcontrols.php:39
+#: controls/powertoolcontrols.php:38
 msgid "Remove widget names"
 msgstr "Widget-Namen entfernen"
 
-#: controls/powertoolcontrols.php:40
+#: controls/powertoolcontrols.php:39
 msgid "Remove widget names to save space."
 msgstr "Entfernen Sie Widget-Namen, um Platz zu sparen."
 
-#: controls/powertoolcontrols.php:43 controls/powertoolcontrols.php:58
-#: controls/powertoolcontrols.php:85
+#: controls/powertoolcontrols.php:42 controls/powertoolcontrols.php:57
+#: controls/powertoolcontrols.php:84
 msgid "Yes"
 msgstr "Ja"
 
-#: controls/powertoolcontrols.php:44 controls/powertoolcontrols.php:59
-#: controls/powertoolcontrols.php:86
+#: controls/powertoolcontrols.php:43 controls/powertoolcontrols.php:58
+#: controls/powertoolcontrols.php:85
 msgid "No"
 msgstr "Nein"
 
-#: controls/powertoolcontrols.php:54
+#: controls/powertoolcontrols.php:53
 msgid "Tooltip widget names"
 msgstr "Tooltip-Widget-Namen"
 
-#: controls/powertoolcontrols.php:55
+#: controls/powertoolcontrols.php:54
 msgid "Show widget names as tooltip."
 msgstr "Widget-Namen als Tooltip anzeigen."
 
-#: controls/powertoolcontrols.php:74
+#: controls/powertoolcontrols.php:73
 msgid "Widget column count"
 msgstr "Anzahl der Widget-Spalten"
 
-#: controls/powertoolcontrols.php:81
+#: controls/powertoolcontrols.php:80
 msgid "Remove WP widgets"
 msgstr "WP-Widgets entfernen"
 
-#: controls/powertoolcontrols.php:82
+#: controls/powertoolcontrols.php:81
 msgid "Remove the WordPress widgets from Elementor editor."
 msgstr "Entfernen Sie die WordPress-Widgets aus dem Elementor-Editor."
 
-#: controls/powertoolcontrols.php:113
+#: controls/powertoolcontrols.php:112
 msgid "Set Page Permalink"
 msgstr "Seite Permalink setzen"
 
-#: controls/powertoolcontrols.php:124 controls/powertoolcontrols.php:152
-#: qanva-powertools-for-elementor.php:418 settings.php:321
+#: controls/powertoolcontrols.php:123 controls/powertoolcontrols.php:151
+#: qanva-powertools-for-elementor.php:346 settings.php:236
 msgid "Save"
 msgstr "Speichern"
 
-#: controls/powertoolcontrols.php:132
+#: controls/powertoolcontrols.php:131
 msgid "Save your favorites"
 msgstr "Speichern Sie Ihre Favoriten"
 
-#: controls/powertoolcontrols.php:141
+#: controls/powertoolcontrols.php:140
 msgid "Your Email"
 msgstr "Ihre E-Mail"
 
-#: controls/powertoolcontrols.php:143
+#: controls/powertoolcontrols.php:142
 msgid "Your email"
 msgstr "Ihre E-Mail"
 
-#: controls/powertoolcontrols.php:150
+#: controls/powertoolcontrols.php:149
 msgid "Letters and Numbers only, min 8 characters"
 msgstr "Nur Buchstaben und Ziffern, mindestens 8 Zeichen"
 
-#: controls/powertoolcontrols.php:152
+#: controls/powertoolcontrols.php:151
 msgid "Your password"
 msgstr "Ihr Passwort"
 
-#: controls/powertoolcontrols.php:152
+#: controls/powertoolcontrols.php:151
 msgid "Please use a password"
 msgstr "Bitte verwenden Sie ein Passwort"
 
-#: controls/powertoolcontrols.php:152
+#: controls/powertoolcontrols.php:151
 msgid "Get Favorites"
 msgstr "Hole Favoriten"
 
-#: qanva-powertools-for-elementor.php:40
+#: controls/powertoolcontrols.php:159
+msgid "Hint"
+msgstr "Hinweis"
+
+#: controls/powertoolcontrols.php:170
+msgid ""
+"Using CTRL or ALT or CMD + q opens a panel where you can clone a page or "
+"open a page quickly."
+msgstr ""
+"Mit der Tastenkombination STRG oder ALT oder CMD + q wird ein Fenster "
+"geöffnet, in dem Sie eine Seite klonen oder eine Seite schnell öffnen können."
+
+#: qanva-powertools-for-elementor.php:33
 msgid "Qanva Powertools for Elementor"
 msgstr "Qanva Powertools für Elementor"
 
-#: qanva-powertools-for-elementor.php:41
+#: qanva-powertools-for-elementor.php:34
 msgid "Add special settings, cloning of pages,posts/templates in Elementor"
 msgstr ""
 "Hinzufügen von speziellen Einstellungen, Klonen von Seiten, Beiträgen/"
 "Vorlagen in Elementor"
 
-#: qanva-powertools-for-elementor.php:77 settings.php:258
+#: qanva-powertools-for-elementor.php:69 settings.php:217
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: qanva-powertools-for-elementor.php:121
+#: qanva-powertools-for-elementor.php:105
 #, php-format
 msgid "\"%1$s\" requires \"%2$s\" to be installed and activated."
 msgstr "\"%1$s\" erfordert, dass \"%2$s\" installiert und aktiviert ist."
 
-#: qanva-powertools-for-elementor.php:122
-#: qanva-powertools-for-elementor.php:132
-#: qanva-powertools-for-elementor.php:142
+#: qanva-powertools-for-elementor.php:105
+#: qanva-powertools-for-elementor.php:111
+#: qanva-powertools-for-elementor.php:117
 msgid "POWER SETTINGS for Elementor"
 msgstr "Power Einstellungen für Elementor"
 
-#: qanva-powertools-for-elementor.php:123
+#: qanva-powertools-for-elementor.php:105
 msgid "Elementor"
 msgstr "Elementor"
 
-#: qanva-powertools-for-elementor.php:131
+#: qanva-powertools-for-elementor.php:111
 #, php-format
 msgid "\"%1$s\" requires min version \"%2$s\" of Elementor to be installed."
 msgstr ""
 "\"%1$s\" erfordert die Installation der Mindestversion %2$s\" von Elementor."
 
-#: qanva-powertools-for-elementor.php:141
+#: qanva-powertools-for-elementor.php:117
 #, php-format
 msgid "\"%1$s\" requires min PHP version \"%2$s\" running."
 msgstr "\"%1$s\" erfordert mindestens die PHP-Version \"%2$s\"."
 
-#: qanva-powertools-for-elementor.php:327
-#: qanva-powertools-for-elementor.php:377
-msgid "Clone"
-msgstr "Klonen"
-
-#: qanva-powertools-for-elementor.php:329
-#: qanva-powertools-for-elementor.php:379
+#: qanva-powertools-for-elementor.php:287
+#: qanva-powertools-for-elementor.php:332
 msgid "Clone and open"
 msgstr "Klonen und öffnen"
 
-#: qanva-powertools-for-elementor.php:342
-#: qanva-powertools-for-elementor.php:408
+#: qanva-powertools-for-elementor.php:298
+#: qanva-powertools-for-elementor.php:301
+#: qanva-powertools-for-elementor.php:346
 msgid "Select to open"
 msgstr "Wählen Sie zum Öffnen"
 
-#: qanva-powertools-for-elementor.php:348
+#: qanva-powertools-for-elementor.php:305
 msgid "New Window"
 msgstr "Neues Fenster"
 
-#: qanva-powertools-for-elementor.php:349
+#: qanva-powertools-for-elementor.php:306
 msgid "Same Window"
 msgstr "Gleiches Fenster"
 
-#: qanva-powertools-for-elementor.php:350
+#: qanva-powertools-for-elementor.php:307
 msgid "Select to clone"
 msgstr "Zum Klonen auswählen"
 
-#: qanva-powertools-for-elementor.php:355
+#: qanva-powertools-for-elementor.php:312
 msgid "Set new name of clone (optional)"
 msgstr "Neuen Namen des Klons festlegen (optional)"
 
-#: qanva-powertools-for-elementor.php:356
+#: qanva-powertools-for-elementor.php:313
 msgid ""
 "Only small letters, numbers and dash allowed, begin with min 4 characters"
 msgstr ""
 "Nur Kleinbuchstaben, Ziffern und Bindestriche erlaubt, Beginn mit mindestens "
 "4 Zeichen"
 
-#: qanva-powertools-for-elementor.php:358
+#: qanva-powertools-for-elementor.php:315
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: qanva-powertools-for-elementor.php:415
+#: qanva-powertools-for-elementor.php:346
 msgid "Open in same window"
 msgstr "Im gleichen Fenster öffnen"
 
-#: qanva-powertools-for-elementor.php:416
+#: qanva-powertools-for-elementor.php:346
 msgid "Open in new window"
 msgstr "In neuem Fenster öffnen"
 
-#: qanva-powertools-for-elementor.php:419
-#: qanva-powertools-for-elementor.php:441
+#: qanva-powertools-for-elementor.php:346
+#: qanva-powertools-for-elementor.php:367
 msgid "Done"
 msgstr "Fertig"
 
-#: settings.php:157
+#: settings.php:137
 msgid "post"
 msgstr "Beitrag"
 
-#: settings.php:157 settings.php:162 settings.php:168
+#: settings.php:137 settings.php:142 settings.php:148
 msgid "Name"
 msgstr "Name"
 
-#: settings.php:162
+#: settings.php:142
 msgid "page"
 msgstr "Seite"
 
-#: settings.php:168
+#: settings.php:148
 msgid "templates"
 msgstr "Templates"
 
-#: settings.php:180
+#: settings.php:160
 msgid "Comments"
 msgstr "Kommentare"
 
-#: settings.php:255
-msgid "Extra Menu-Buttons, page cloning and special settings for Elementor"
-msgstr ""
-"Extra Menü-Buttons, Seitenklonen und spezielle Einstellungen für Elementor"
+#: settings.php:214
+msgid "Page cloning and special settings for Elementor"
+msgstr "Seitenklonen und spezielle Einstellungen für Elementor"
 
-#: settings.php:259
-msgid "With this widget to add extra menu buttons and a select to Elementor"
-msgstr ""
-"Mit diesem Widget können Sie zusätzliche Menüschaltflächen und eine Auswahl-"
-"Dropdown zu Elementor hinzufügen"
-
-#: settings.php:261
-msgid "Select a target or enter a individual link"
-msgstr "Wählen Sie ein Ziel oder geben Sie eine individuelle Verknüpfung ein"
-
-#: settings.php:264
-msgid "Please choose a target"
-msgstr "Bitte wählen Sie ein Ziel"
-
-#: settings.php:268
-msgid "Individual link"
-msgstr "Individueller Link"
-
-#: settings.php:271
-msgid "Give your link a name"
-msgstr "Geben Sie Ihrem Link einen Namen"
-
-#: settings.php:273
-msgid "Linkname"
-msgstr "Linkname"
-
-#: settings.php:276
-msgid "Same window"
-msgstr "Gleiches Fenster"
-
-#: settings.php:277
-msgid "or new one"
-msgstr "oder neues"
-
-#: settings.php:280
-msgid "Enable \"Quickchanger\" in Elementor"
-msgstr "Aktivieren Sie \"Quickchanger\" in Elementor"
-
-#: settings.php:287
-msgid " Notice"
-msgstr " Hinweis"
-
-#: settings.php:287
-msgid ""
-" \"Quickchanger\" is a dropdown link-list to post, pages, landing-pages and "
-"templates."
-msgstr ""
-" \"Quickchanger\" ist eine Dropdown-Link-Liste zu Beiträgen, Seiten, "
-"Landingpages und Templates."
-
-#: settings.php:289
-msgid "Enable cloning of pages,posts and templates in Elementor"
-msgstr ""
-"Aktivieren Sie das Klonen von Seiten, Beiträgen und Vorlagen in Elementor"
-
-#: settings.php:296
-msgid "Open cloned page/post/template directly"
-msgstr "Geklonte Seite/Beitrag/Vorlage direkt öffnen"
-
-#: settings.php:304
+#: settings.php:219
 msgid "Remove Google-Fonts from frontend"
 msgstr "Google-Fonts aus dem Frontend entfernen"
 
-#: settings.php:312
+#: settings.php:227
 msgid "Remove Fontawsome from frontend"
 msgstr "Fontawsome aus dem Frontend entfernen"
 
-#: settings.php:325
+#: settings.php:240
 msgid "In case loaded favorites let Elementor crash, you can delete them here"
 msgstr ""
 "Falls geladene Favoriten Elementor zum Absturz bringen, können Sie diese "
 "hier löschen"
 
-#: settings.php:327
+#: settings.php:242
 msgid "Reset Favorite Widgets"
 msgstr "Favoriten-Widgets zurücksetzen"
 
-#: settings.php:342
-msgid "Delete"
-msgstr "Löschen"
+#~ msgid "With this widget to add extra menu buttons and a select to Elementor"
+#~ msgstr ""
+#~ "Mit diesem Widget können Sie zusätzliche Menüschaltflächen und eine "
+#~ "Auswahl-Dropdown zu Elementor hinzufügen"
+
+#~ msgid "Select a target or enter a individual link"
+#~ msgstr ""
+#~ "Wählen Sie ein Ziel oder geben Sie eine individuelle Verknüpfung ein"
+
+#~ msgid "Please choose a target"
+#~ msgstr "Bitte wählen Sie ein Ziel"
+
+#~ msgid "Individual link"
+#~ msgstr "Individueller Link"
+
+#~ msgid "Give your link a name"
+#~ msgstr "Geben Sie Ihrem Link einen Namen"
+
+#~ msgid "Linkname"
+#~ msgstr "Linkname"
+
+#~ msgid "Same window"
+#~ msgstr "Gleiches Fenster"
+
+#~ msgid "or new one"
+#~ msgstr "oder neues"
+
+#~ msgid "Delete"
+#~ msgstr "Löschen"
+
+#~ msgid "Clone"
+#~ msgstr "Klonen"
+
+#~ msgid "Enable \"Quickchanger\" in Elementor"
+#~ msgstr "Aktivieren Sie \"Quickchanger\" in Elementor"
+
+#~ msgid " Notice"
+#~ msgstr " Hinweis"
+
+#~ msgid ""
+#~ " \"Quickchanger\" is a dropdown link-list to post, pages, landing-pages "
+#~ "and templates."
+#~ msgstr ""
+#~ " \"Quickchanger\" ist eine Dropdown-Link-Liste zu Beiträgen, Seiten, "
+#~ "Landingpages und Templates."
+
+#~ msgid "Enable cloning of pages,posts and templates in Elementor"
+#~ msgstr ""
+#~ "Aktivieren Sie das Klonen von Seiten, Beiträgen und Vorlagen in Elementor"
+
+#~ msgid "Open cloned page/post/template directly"
+#~ msgstr "Geklonte Seite/Beitrag/Vorlage direkt öffnen"
 
 #~ msgid "Open"
 #~ msgstr "Öffnen"

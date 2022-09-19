@@ -211,30 +211,10 @@ global $wpdb;
 <?php wp_nonce_field( 'qanvafavreset', 'qanvaproofthree' ); ?>
 </form>
 <div class="qanva qanvasetting uk-container-center uk-margin-top uk-margin-large-bottom">
-<h1><img src="<?php echo plugin_dir_url( __FILE__ ); ?>img/qanvalogo.svg" class="logo">Qanva <?php _e( "Extra Menu-Buttons, page cloning and special settings for Elementor", "qanva-powertools-for-elementor" ); ?>*</h1>
+<h1><img src="<?php echo plugin_dir_url( __FILE__ ); ?>img/qanvalogo.svg" class="logo">Qanva Powertools - <?php _e( "Page cloning and special settings for Elementor", "qanva-powertools-for-elementor" ); ?>*</h1>
         <div class="uk-grid uk-margin-remove-left uk-margin-right" data-uk-grid-margin>
             <div class="uk-width-1-3 uk-card uk-card-default uk-card-body">
 <h4><?php _e( "Settings", "qanva-powertools-for-elementor" ); ?></h4>
-<?php _e( "With this widget to add extra menu buttons and a select to Elementor", "qanva-powertools-for-elementor" ); ?>.
-<hr>
-<?php _e( "Select a target or enter a individual link", "qanva-powertools-for-elementor" ); ?>:
-<br>
-			<select class="uk-form-small uk-width-1-1" name="pagetarget" form="qanvaebeform" autocomplete="off" >
-					<option value=''><?php _e( "Please choose a target", "qanva-powertools-for-elementor" );?></option>
-					<?php echo qanvaebe_get_links(); ?>
-			</select>
-		<p>
-		<input type="text" name="pagetargettext" form="qanvaebeform"  class="uk-input uk-form-small uk-width-1-1" placeholder="<?php _e( "Individual link", "qanva-powertools-for-elementor" ); ?>"  autocomplete="off"/>
-		</p>
-		<p>
-		<?php _e( "Give your link a name", "qanva-powertools-for-elementor" ); ?>:
-		<br>
-		<input type="text" name="pagename" form="qanvaebeform"  class="uk-input uk-form-small uk-width-1-1" placeholder="<?php _e( "Linkname", "qanva-powertools-for-elementor" ); ?>" autocomplete="off"/>
-		</p>
-		<p>
-		<?php _e( "Same window", "qanva-powertools-for-elementor" ); ?>:&nbsp;<input type="radio" name="linktarget" form="qanvaebeform"  class="uk-radio" value="_self" checked />
-		<?php _e( "or new one", "qanva-powertools-for-elementor" ); ?>:&nbsp;<input type="radio" name="linktarget" form="qanvaebeform"  class="uk-radio" value="_blank" />
-		</p>
 <hr>
 		<h5><?php _e( "Remove Google-Fonts from frontend", "qanva-powertools-for-elementor" ); ?></h5>
 		<div class="switchbox  uk-width-1-1">
@@ -271,14 +251,6 @@ global $wpdb;
 		    
 				<div class="uk-width-2-3 uk-card uk-card-default uk-card-body qanvaexample">
 					<!-- content right -->
-					<?php 
-						if ( !empty( $savevalues ) ) {
-							foreach( $savevalues AS $key => $val ){
-								echo '<button type="submit" name="deleter" value="' . esc_attr($key) . '" form="qanvaebeformb" class="uk-button uk-button-danger uk-form-small uk-width-1-3 uk-margin-small-top" >' . __( 'Delete' ) . ' &rarr; ' . esc_attr($val[ 2 ]) . '</button><br>';
-							}
-							
-						}
-					?>
 				</div>
 		</div>  
 		<div class="uk-text-right uk-text-meta uk-text-small uk-margin-right"><small>&copy; <?php echo date( "Y");?> <a href="https://qanva.tech" target="_blank" class="uk-link-text" >QANVA.TECH</a> All rights reserved.</small></div>

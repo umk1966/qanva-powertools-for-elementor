@@ -14,7 +14,6 @@ class Qanvapowerusertoolscontrols{
 	}
 	
 	public static function qanvapowertoolcontrols( \Elementor\Core\DocumentTypes\PageBase $page ){
-#	public function qanvapowertoolcontrols( Element_Base $page ){
 			global $post, $current_user;
 			
 			$page->start_controls_section(
@@ -153,6 +152,25 @@ class Qanvapowerusertoolscontrols{
 					]
 				);				
 			}
+			
+		  $page->add_control(
+			  'control_qpt_hinthead',
+			  [
+				  'label' => __( 'Hint', 'qanva-powertools-for-elementor' ),
+				  'type' => \Elementor\Controls_Manager::HEADING,
+				  'separator' => 'before',
+			  ]
+		  );
+		  
+			$page->add_control(
+					'qanva_qpt_hint',
+					[
+						'label' => '',
+						'type' => \Elementor\Controls_Manager::RAW_HTML,
+						'raw' => __( 'Using CTRL or ALT or CMD + q opens a panel where you can clone a page or open a page quickly.', 'qanva-powertools-for-elementor' ),
+					]
+				);			
+			
 				$page->end_controls_section();
 	}
 }

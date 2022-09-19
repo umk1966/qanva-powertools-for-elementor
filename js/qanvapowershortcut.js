@@ -1,5 +1,5 @@
 
-top.document.getElementById('qanvaeeboverlay').addEventListener('click',function(event){
+window.parent.document.getElementById('qanvaeeboverlay').addEventListener('click',function(event){
 if(event.target.id != 'qanvaeebinfo' && event.target.id != 'qanvaeebcloneselect' && event.target.id != 'qanvaeebselectmodal' && event.target.id != ''){
    top.document.getElementById('qanvaeeboverlay').style.display = 'none';
 }
